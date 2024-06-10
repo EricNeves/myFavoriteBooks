@@ -1,10 +1,23 @@
 <?php
+use App\Http\Router;
 
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/src/config/bootstrap.php';
 require_once __DIR__ . '/src/routes/api.php';
 
-$factories   = require_once __DIR__ . '/src/config/factories.php';
-$middlewares = require_once __DIR__ . '/src/config/middlewares.php';
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
-dispatch(\App\Http\Router::getRoutes(), $factories, $middlewares);
+$factories      = require_once __DIR__ . '/src/config/factories.php';
+$middlewares    = require_once __DIR__ . '/src/config/middlewares.php';
+$databaseConfig = require_once __DIR__ . '/src/config/database.php';
+
+/**
+ * Set the exception handler
+ */
+set_exception_handler([App\Exceptions\HandleExceptions::class, 'handle']);
+
+/**
+ * Dispatch the routes
+ */
+dispatch(Router::getRoutes(), $factories, $middlewares, $databaseConfig);

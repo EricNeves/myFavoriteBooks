@@ -9,7 +9,7 @@ use App\Http\Response;
  * @param array $routes
  * @return void
  */
-function dispatch(array $routes, array $factories, array $middlewares): void
+function dispatch(array $routes, array $factories, array $middlewares, array $databaseConfig): void
 {
     $url = $_GET['url'] ?? '/';
 
@@ -47,8 +47,8 @@ function dispatch(array $routes, array $factories, array $middlewares): void
 
                 $extendFactory = new $factoryClass();
 
-                $controller = $extendFactory->generateInstance($matches);
-                $controller->handle($request, $response);
+                $controller = $extendFactory->generateInstance($databaseConfig);
+                $controller->handle($request, $response, $matches);
             }
         }
     }
