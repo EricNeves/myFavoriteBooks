@@ -5,7 +5,7 @@ namespace App\Http;
 class Request
 {
     /**
-     * @var array|null
+     * @var array
      */
     private array $user = [];
 

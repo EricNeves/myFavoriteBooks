@@ -56,7 +56,6 @@ function dispatch(array $routes, array $factories, array $middlewares): void
     }
 
     if (!$routerFound) {
-
         $response->json(['message' => 'Sorry, router not found.'], 404);
     }
 }
