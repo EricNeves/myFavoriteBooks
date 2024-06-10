@@ -2,6 +2,8 @@
 
 namespace App\Http;
 
+use Exception;
+
 class Request
 {
     /**
@@ -37,6 +39,34 @@ class Request
         };
 
         return $data;
+    }
+
+    /**
+     * Function to validate the request fields
+     *
+     * @param array $data ['field' => 'value']
+     * @param string $fieldName ['field']
+     * @param string $dataType 'string' || 'email' || 'string|email'
+     * @throws Exception
+     * @return void
+     */
+    public function validateField(array $data, string $fieldName, string $dataType = 'string'): void
+    {
+        if (!isset($data[$fieldName]) || empty(trim(trim($data[$fieldName])))) {
+            throw new Exception("The field ($fieldName) is required");
+        }
+
+        $types = explode('|', $dataType);
+
+        foreach ($types as $type) {
+            if ($type === 'string' && !is_string($data[$fieldName])) {
+                throw new Exception("The field ($fieldName) must be a string");
+            }
+
+            if ($type === 'email' && !filter_var($data[$fieldName], FILTER_VALIDATE_EMAIL)) {
+                throw new Exception("The field ($fieldName) must be a valid email");
+            }
+        }
     }
 
     /**
