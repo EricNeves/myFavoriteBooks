@@ -11,9 +11,7 @@ use App\Http\Response;
  */
 function dispatch(array $routes, array $factories, array $middlewares): void
 {
-    $url = '/';
-
-    isset($_GET['url']) && $url .= $_GET['url'];
+    $url = $_GET['url'];
 
     $url !== '/' && $url = rtrim($url, '/');
 
