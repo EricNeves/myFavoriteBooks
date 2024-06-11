@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Utils\Implementations;
+namespace App\Utils\Implementations;
 
 use App\Utils\IGenerator;
 
