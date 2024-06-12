@@ -4,6 +4,7 @@ namespace App\UseCases\User\RegisterUser;
 
 use App\Repositories\IUserRepository;
 use App\UseCases\User\RegisterUser\IRegisterUserUseCase;
+use App\UseCases\User\RegisterUser\RegisterUserDTO;
 use App\Utils\IGenerator;
 use Exception;
 

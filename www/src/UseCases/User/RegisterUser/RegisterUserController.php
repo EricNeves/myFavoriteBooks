@@ -4,6 +4,7 @@ namespace App\UseCases\User\RegisterUser;
 
 use App\Http\Request;
 use App\Http\Response;
+use App\UseCases\User\RegisterUser\IRegisterUserUseCase;
 use App\UseCases\User\RegisterUser\RegisterUserDTO;
 
 class RegisterUserController
