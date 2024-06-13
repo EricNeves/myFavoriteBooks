@@ -5,6 +5,7 @@ namespace App\UseCases\User\FetchUser;
 use App\Repositories\IUserRepository;
 use App\UseCases\User\FetchUser\FetchUserDTO;
 use App\UseCases\User\FetchUser\IFetchUserUseCase;
+use Exception;
 
 class FetchUserUseCase implements IFetchUserUseCase
 {
@@ -17,7 +18,7 @@ class FetchUserUseCase implements IFetchUserUseCase
         $user = $this->userRepository->findById($userId);
 
         if (!$user) {
-            throw new \Exception('Sorry, user not found.');
+            throw new Exception('Sorry, user not found.');
         }
 
         $fetchUserDTO = new FetchUserDTO($user['id'], $user['username'], $user['email']);
