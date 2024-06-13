@@ -5,7 +5,7 @@ namespace App\Providers\Implementations;
 use App\Providers\IDatabaseProvider;
 use PDO;
 
-class PostgresProvider implements IDatabaseProvider
+class UserPostgresProvider implements IDatabaseProvider
 {
     public function __construct(private PDO $pdo)
     {
