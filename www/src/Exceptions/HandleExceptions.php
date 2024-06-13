@@ -19,6 +19,10 @@ class HandleExceptions
                 "message" => "Sorry, database connection failed",
                 "status"  => 500,
             ],
+            "401"   => [
+                "message" => $exception->getMessage(),
+                "status"  => 401,
+            ],
         ];
 
         if (array_key_exists($exception->getCode(), $errors_code)) {
@@ -28,7 +32,7 @@ class HandleExceptions
         }
 
         return $response->json([
-            'error' => $exception->getTrace(),
+            'error' => $exception->getMessage(),
         ], 400);
     }
 }

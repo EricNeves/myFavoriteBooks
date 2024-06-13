@@ -15,4 +15,9 @@ class UserRepository implements IUserRepository
     {
         return $this->database->create($data);
     }
+
+    public function findByEmail(string $email): array | bool
+    {
+        return $this->database->findByEmail($email);
+    }
 }

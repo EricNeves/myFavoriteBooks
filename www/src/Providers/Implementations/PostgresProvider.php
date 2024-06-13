@@ -33,4 +33,20 @@ class PostgresProvider implements IDatabaseProvider
 
         return true;
     }
+
+    public function findByEmail(string $email): array | bool
+    {
+        $stmt = $this->pdo->prepare("
+            SELECT
+                *
+            FROM
+                mfb_users
+            WHERE
+                email = ?
+        ");
+
+        $stmt->execute([$email]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }
