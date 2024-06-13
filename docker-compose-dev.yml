@@ -26,17 +26,9 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - postgres_db_data:/var/lib/postgresql/data
       - ./init:/init
       - ./init/tables.sql:/docker-entrypoint-initdb.d/tables.sql
-  mongo:
-    container_name: mfb_mongo
-    image: mongo:5.0.3
-    ports:
-      - 27017:27017
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: mfb_user
-      MONGO_INITDB_ROOT_PASSWORD: mfb_pass
 
 volumes:
-  db_data:
+  postgres_db_data:
