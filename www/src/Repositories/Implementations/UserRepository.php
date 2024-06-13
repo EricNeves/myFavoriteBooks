@@ -20,4 +20,9 @@ class UserRepository implements IUserRepository
     {
         return $this->database->findByEmail($email);
     }
+
+    public function findById(int $id): array | bool
+    {
+        return $this->database->findById($id);
+    }
 }

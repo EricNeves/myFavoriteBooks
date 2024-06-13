@@ -49,4 +49,20 @@ class PostgresProvider implements IDatabaseProvider
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function findById(int $id): array | bool
+    {
+        $stmt = $this->pdo->prepare("
+            SELECT
+                id, username, email
+            FROM
+                mfb_users
+            WHERE
+                id = ?
+        ");
+
+        $stmt->execute([$id]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }

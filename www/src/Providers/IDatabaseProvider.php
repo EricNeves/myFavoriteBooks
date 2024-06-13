@@ -18,4 +18,11 @@ interface IDatabaseProvider
      * @return array
      */
     public function findByEmail(string $email): array | bool;
+    /**
+     * Method to find a record by id
+     *
+     * @param int $id
+     * @return array
+     */
+    public function findById(int $id): array | bool;
 }

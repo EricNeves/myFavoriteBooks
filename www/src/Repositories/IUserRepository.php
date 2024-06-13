@@ -18,4 +18,11 @@ interface IUserRepository
      * @return array | null
      */
     public function findByEmail(string $email): array | bool;
+    /**
+     * Find a user by id.
+     *
+     * @param int $id
+     * @return array | null
+     */
+    public function findById(int $id): array | bool;
 }
