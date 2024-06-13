@@ -2,10 +2,10 @@
 
 namespace App\Exceptions;
 
+use Exception;
 use Throwable;
 
-class AuthenticationException extends \Exception
-
+class AuthorizationException extends Exception
 {
     public function __construct(string $message = "", int $code = 0, Throwable $previous = null)
     {

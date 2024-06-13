@@ -2,7 +2,7 @@
 
 namespace App\UseCases\User\AuthenticateUser;
 
-use App\Exceptions\AuthenticationException;
+use App\Exceptions\AuthorizationException;
 use App\HttpInteractions\IJWTInteraction;
 use App\Repositories\Implementations\UserRepository;
 use App\UseCases\User\AuthenticateUser\AuthenticateUserDTO;
@@ -20,13 +20,13 @@ class AuthenticateUserUseCase implements IAuthenticateUserUseCase
         $authenticateUser = $this->userRepository->findByEmail($authenticateUserDTO->email());
 
         if (!$authenticateUser) {
-            throw new AuthenticationException("Sorry, email or password is incorrect.", 401);
+            throw new AuthorizationException("Sorry, email or password is incorrect.", 401);
         }
 
         $matchPassword = $this->passwordUtils->verifyPassword($authenticateUserDTO->password(), $authenticateUser['password']);
 
         if (!$matchPassword) {
-            throw new AuthenticationException("Sorry, email or password is incorrect.", 401);
+            throw new AuthorizationException("Sorry, email or password is incorrect.", 401);
         }
 
         $data = [
