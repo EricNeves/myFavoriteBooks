@@ -5,18 +5,18 @@ namespace App\UseCases\User\RegisterUser;
 use App\Repositories\IUserRepository;
 use App\UseCases\User\RegisterUser\IRegisterUserUseCase;
 use App\UseCases\User\RegisterUser\RegisterUserDTO;
-use App\Utils\IGenerator;
+use App\Utils\IPasswordUtils;
 use Exception;
 
 class RegisterUserUseCase implements IRegisterUserUseCase
 {
-    public function __construct(private IGenerator $generator, private IUserRepository $userRepository)
+    public function __construct(private IPasswordUtils $passwordUtils, private IUserRepository $userRepository)
     {
     }
 
     public function execute(RegisterUserDTO $registerUserDTO): string
     {
-        $hashPassword = $this->generator->generatePasswordHash($registerUserDTO->password());
+        $hashPassword = $this->passwordUtils->generatePasswordHash($registerUserDTO->password());
 
         $fields = [
             'username' => $registerUserDTO->username(),

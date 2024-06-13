@@ -5,7 +5,7 @@ namespace App\UseCases\User\RegisterUser;
 use App\Infrastructure\Postgres;
 use App\Providers\Implementations\PostgresProvider;
 use App\Repositories\Implementations\UserRepository;
-use App\Utils\Implementations\Generator;
+use App\Utils\Implementations\PasswordUtils;
 
 class RegisterUserFactory
 {
@@ -13,8 +13,8 @@ class RegisterUserFactory
     {
         $postgresProvider       = new PostgresProvider(Postgres::connect($databaseConfig));
         $userRepository         = new UserRepository($postgresProvider);
-        $generator              = new Generator();
-        $registerUserUseCase    = new RegisterUserUseCase($generator, $userRepository);
+        $passwordUtils          = new PasswordUtils();
+        $registerUserUseCase    = new RegisterUserUseCase($passwordUtils, $userRepository);
         $registerUserController = new RegisterUserController($registerUserUseCase);
 
         return $registerUserController;
