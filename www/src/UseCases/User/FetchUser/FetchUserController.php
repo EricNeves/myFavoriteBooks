@@ -14,6 +14,8 @@ class FetchUserController
 
     public function handle(Request $request, Response $response): Response
     {
-        return $response->json($this->fetchUserUseCase->execute($request->user()->id));
+        return $response->json([
+            "data" => $this->fetchUserUseCase->execute($request->user()->id),
+        ]);
     }
 }
