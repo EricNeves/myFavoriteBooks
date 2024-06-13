@@ -46,7 +46,7 @@ class UserPostgresProvider implements IDatabaseProvider
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function findById(int $id): array | bool
+    public function findById(int | string $id, int | string $user_id = null): array | bool
     {
         $stmt = $this->pdo->prepare("
             SELECT

@@ -24,7 +24,7 @@ interface IDatabaseProvider
      * @param int $id
      * @return array
      */
-    public function findById(int $id): array | bool;
+    public function findById(int | string $id, int | string $user_id = null): array | bool;
     /**
      * Method to update a record
      *
