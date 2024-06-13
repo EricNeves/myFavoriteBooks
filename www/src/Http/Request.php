@@ -2,14 +2,16 @@
 
 namespace App\Http;
 
+use App\Exceptions\AuthorizationException;
 use Exception;
+use stdClass;
 
 class Request
 {
     /**
-     * @var array
+     * @var stdClass
      */
-    private array $user = [];
+    private stdClass $user;
 
     /**
      * Function to get the request method
@@ -70,6 +72,29 @@ class Request
     }
 
     /**
+     * Function to get the bearer token
+     *
+     * @throws AuthorizationException
+     * @return string
+     */
+    public function bearerToken(): string
+    {
+        $headers = getallheaders();
+
+        if (!isset($headers['Authorization'])) {
+            throw new AuthorizationException('Authorization header is required', 401);
+        }
+
+        $authorizationsPartials = explode(' ', $headers['Authorization']);
+
+        if (count($authorizationsPartials) !== 2) {
+            throw new AuthorizationException('Invalid authorization header, bearer is required', 401);
+        }
+
+        return $authorizationsPartials[1];
+    }
+
+    /**
      * Function to get the user
      */
     public function user()
@@ -80,7 +105,7 @@ class Request
     /**
      * Function to set the user
      */
-    public function setUser($user)
+    public function setUser(stdClass $user)
     {
         $this->user = $user;
     }
