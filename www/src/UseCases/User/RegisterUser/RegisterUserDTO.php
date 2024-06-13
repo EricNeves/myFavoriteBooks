@@ -4,17 +4,8 @@ namespace App\UseCases\User\RegisterUser;
 
 class RegisterUserDTO
 {
-    /**
-     * @var string
-     */
     public string $username;
-    /**
-     * @var string
-     */
     public string $email;
-    /**
-     * @var string
-     */
     public string $password;
 
     public function __construct(string $username, string $email, string $password)
