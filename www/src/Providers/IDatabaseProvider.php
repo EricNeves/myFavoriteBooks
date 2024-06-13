@@ -25,4 +25,11 @@ interface IDatabaseProvider
      * @return array
      */
     public function findById(int $id): array | bool;
+    /**
+     * Method to update a record
+     *
+     * @param array $data
+     * @return bool
+     */
+    public function update(array $data, int | string $userId): bool;
 }

@@ -25,4 +25,9 @@ class UserRepository implements IUserRepository
     {
         return $this->database->findById($id);
     }
+
+    public function update(array $data, int | string $userId): bool
+    {
+        return $this->database->update($data, $userId);
+    }
 }

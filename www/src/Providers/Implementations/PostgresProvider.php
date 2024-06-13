@@ -65,4 +65,23 @@ class PostgresProvider implements IDatabaseProvider
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function update(array $data, int | string $userId): bool
+    {
+        $stmt = $this->pdo->prepare("
+            UPDATE
+                mfb_users
+            SET
+                username = ?
+            WHERE
+                id = ?
+        ");
+
+        $stmt->execute([
+            $data['username'],
+            $userId,
+        ]);
+
+        return $stmt->rowCount() > 0;
+    }
 }

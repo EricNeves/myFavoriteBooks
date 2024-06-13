@@ -25,4 +25,11 @@ interface IUserRepository
      * @return array | null
      */
     public function findById(int $id): array | bool;
+    /**
+     * Update a user by id.
+     *
+     * @param array $data
+     * @return bool
+     */
+    public function update(array $data, int | string $userId): bool;
 }
