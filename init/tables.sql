@@ -4,3 +4,12 @@ CREATE TABLE IF NOT EXISTS mfb_users (
   email VARCHAR(255) NOT NULL UNIQUE,
   password VARCHAR(255) NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS mfb_books (
+  id SERIAL PRIMARY KEY,
+  title VARCHAR(255) NOT NULL,
+  author VARCHAR(255) NOT NULL,
+  image BYTEA NOT NULL,
+  user_id INT NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES mfb_users(id)
+);
