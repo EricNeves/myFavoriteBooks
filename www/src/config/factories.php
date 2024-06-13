@@ -6,4 +6,5 @@ return [
     'User\AuthenticateUser\AuthenticateUserController' => \App\UseCases\User\AuthenticateUser\AuthenticateUserFactory::class,
     'User\FetchUser\FetchUserController'               => \App\UseCases\User\FetchUser\FetchUserFactory::class,
     'User\EditUser\EditUserController'                 => \App\UseCases\User\EditUser\EditUserFactory::class,
+    'Book\CreateBook\CreateBookController'             => \App\UseCases\Book\CreateBook\CreateBookFactory::class,
 ];
