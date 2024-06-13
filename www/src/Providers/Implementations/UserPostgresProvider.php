@@ -27,11 +27,7 @@ class UserPostgresProvider implements IDatabaseProvider
             $data['password'],
         ]);
 
-        if (!$this->pdo->lastInsertId() > 0) {
-            return false;
-        }
-
-        return true;
+        return $this->pdo->lastInsertId() > 0;
     }
 
     public function findByEmail(string $email): array | bool
