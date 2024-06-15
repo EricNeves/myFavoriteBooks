@@ -55,7 +55,20 @@ class BookPostgresProvider implements IDatabaseProvider
 
     public function findById(int | string $id, int | string $user_id = null): array | bool
     {
-        throw new Exception("Method not implemented");
+        $stmt = $this->pdo->prepare("
+            SELECT
+                *
+            FROM
+                mfb_books
+            WHERE
+                id = ?
+            AND
+                user_id = ?
+        ");
+
+        $stmt->execute([$id, $user_id]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public function update(array $data, int | string $userId): bool

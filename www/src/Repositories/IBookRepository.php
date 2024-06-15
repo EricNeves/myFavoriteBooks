@@ -18,4 +18,5 @@ interface IBookRepository
      * @return array
      */
     public function all(int | string $user_id): array;
+    public function findByID(int | string $id, int | string $user_id): array | bool;
 }

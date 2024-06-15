@@ -11,3 +11,4 @@ Router::put('/users/edit', 'User\EditUser\EditUserController')->middlewares('aut
 
 Router::post('/books/create', 'Book\CreateBook\CreateBookController')->middlewares('auth');
 Router::get('/books/all', 'Book\FetchBooks\FetchBooksController')->middlewares('auth');
+Router::get('/books/fetch/{id}', 'Book\FetchBook\FetchBookController')->middlewares('auth');

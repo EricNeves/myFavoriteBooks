@@ -20,4 +20,9 @@ class BookRepository implements IBookRepository
     {
         return $this->database->fetchAll($user_id);
     }
+
+    public function findByID(int | string $id, int | string $user_id): array | bool
+    {
+        return $this->database->findById($id, $user_id);
+    }
 }
