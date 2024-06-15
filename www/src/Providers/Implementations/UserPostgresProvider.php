@@ -68,7 +68,7 @@ class UserPostgresProvider implements IDatabaseProvider
         throw new Exception("Method not implemented");
     }
 
-    public function update(array $data, int | string $userId): bool
+    public function update(array $data, int | string $user_id): bool
     {
         $stmt = $this->pdo->prepare("
             UPDATE
@@ -81,9 +81,14 @@ class UserPostgresProvider implements IDatabaseProvider
 
         $stmt->execute([
             $data['username'],
-            $userId,
+            $user_id,
         ]);
 
         return $stmt->rowCount() > 0;
+    }
+
+    public function delete(int | string $id, null | int | string $user_id = null): bool
+    {
+        throw new Exception("Method not implemented");
     }
 }
