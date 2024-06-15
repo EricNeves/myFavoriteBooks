@@ -25,4 +25,11 @@ interface IImageUtils
      * @return mixed
      */
     public function convertBase64ToBinary(string $base64Image): mixed;
+    /**
+     * Convert the binary image data to base64
+     *
+     * @param mixed $binaryImage
+     * @return string
+     */
+    public function convertBinaryToBase64(mixed $binaryImage): string;
 }

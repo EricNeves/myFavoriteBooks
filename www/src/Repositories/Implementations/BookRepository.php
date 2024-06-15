@@ -15,4 +15,9 @@ class BookRepository implements IBookRepository
     {
         return $this->database->create($data);
     }
+
+    public function all(int | string $user_id): array
+    {
+        return $this->database->fetchAll($user_id);
+    }
 }

@@ -32,6 +32,22 @@ class BookPostgresProvider implements IDatabaseProvider
         return $this->pdo->lastInsertId() > 0;
     }
 
+    public function fetchAll(int | string $user_id = null): array
+    {
+        $stmt = $this->pdo->prepare("
+            SELECT
+                *
+            FROM
+                mfb_books
+            WHERE
+                user_id = ?
+        ");
+
+        $stmt->execute([$user_id]);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function findByEmail(string $email): array | bool
     {
         throw new Exception("Method not implemented");

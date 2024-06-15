@@ -31,4 +31,11 @@ class ImageUtils implements IImageUtils
 
         return $base64ImageParsed;
     }
+
+    public function convertBinaryToBase64(mixed $binaryImage): string
+    {
+        $image = stream_get_contents($binaryImage);
+
+        return "data:image/png;base64," . base64_encode($image);
+    }
 }

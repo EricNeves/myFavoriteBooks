@@ -11,4 +11,11 @@ interface IBookRepository
      * @return bool
      */
     public function save(array $data): bool;
+    /**
+     * Method to get all records
+     *
+     * @param int|string $user_id
+     * @return array
+     */
+    public function all(int | string $user_id): array;
 }

@@ -10,3 +10,4 @@ Router::get('/users/fetch', 'User\FetchUser\FetchUserController')->middlewares('
 Router::put('/users/edit', 'User\EditUser\EditUserController')->middlewares('auth');
 
 Router::post('/books/create', 'Book\CreateBook\CreateBookController')->middlewares('auth');
+Router::get('/books/all', 'Book\FetchBooks\FetchBooksController')->middlewares('auth');

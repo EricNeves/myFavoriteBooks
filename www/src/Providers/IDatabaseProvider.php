@@ -26,6 +26,10 @@ interface IDatabaseProvider
      */
     public function findById(int | string $id, int | string $user_id = null): array | bool;
     /**
+     * Method to fetch all records
+     */
+    public function fetchAll(int | string $user_id = null): array;
+    /**
      * Method to update a record
      *
      * @param array $data
