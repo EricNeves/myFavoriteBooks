@@ -24,27 +24,27 @@ class FetchBookDTO
         return $this->id;
     }
 
-    public function title()
+    public function title(): string
     {
         return $this->title;
     }
 
-    public function author()
+    public function author(): string
     {
         return $this->author;
     }
 
-    public function image()
+    public function image(): string
     {
         return $this->image;
     }
 
-    public function book_id()
+    public function book_id(): int | string
     {
         return $this->book_id;
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'id'      => $this->id,
