@@ -7,7 +7,7 @@ interface IUserRepository
     /**
      * Create a new user.
      *
-     * @param array $data
+     * @param array $data = ['username' => 'string', 'email' => 'string', 'password' => 'string']
      * @return bool
      */
     public function save(array $data): bool;
@@ -28,7 +28,7 @@ interface IUserRepository
     /**
      * Update a user by id.
      *
-     * @param array $data
+     * @param array $data = ['username' => '']
      * @return bool
      */
     public function update(array $data, int | string $userId): bool;
