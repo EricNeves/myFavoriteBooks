@@ -3,6 +3,7 @@
 namespace App\Providers\Implementations;
 
 use App\Providers\IDatabaseProvider;
+use Exception;
 use PDO;
 
 class UserPostgresProvider implements IDatabaseProvider
@@ -60,6 +61,11 @@ class UserPostgresProvider implements IDatabaseProvider
         $stmt->execute([$id]);
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function fetchAll(int | string $user_id = null): array
+    {
+        throw new Exception("Method not implemented");
     }
 
     public function update(array $data, int | string $userId): bool
