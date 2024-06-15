@@ -30,4 +30,9 @@ class BookRepository implements IBookRepository
     {
         return $this->database->update($data, $user_id);
     }
+
+    public function delete(int | string $id, int | string $user_id): bool
+    {
+        return $this->database->delete($id, $user_id);
+    }
 }

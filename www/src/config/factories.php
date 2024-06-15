@@ -10,4 +10,5 @@ return [
     'Book\FetchBooks\FetchBooksController'             => \App\UseCases\Book\FetchBooks\FetchBooksFactory::class,
     'Book\FetchBook\FetchBookController'               => \App\UseCases\Book\FetchBook\FetchBookFactory::class,
     'Book\EditBook\EditBookController'                 => \App\UseCases\Book\EditBook\EditBookFactory::class,
+    'Book\RemoveBook\RemoveBookController'             => \App\UseCases\Book\RemoveBook\RemoveBookFactory::class,
 ];

@@ -33,7 +33,16 @@ interface IDatabaseProvider
      * Method to update a record
      *
      * @param array $data
+     * @param int $user_id
      * @return bool
      */
-    public function update(array $data, int | string $userId): bool;
+    public function update(array $data, int | string $user_id): bool;
+    /**
+     * Method to delete a record
+     *
+     * @param int $id
+     * @param int $user_id
+     * @return bool
+     */
+    public function delete(int | string $id, int | string $user_id = null): bool;
 }

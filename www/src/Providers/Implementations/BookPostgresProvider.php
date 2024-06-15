@@ -71,7 +71,7 @@ class BookPostgresProvider implements IDatabaseProvider
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function update(array $data, int | string $userId): bool
+    public function update(array $data, int | string $user_id): bool
     {
         $stmt = $this->pdo->prepare("
             UPDATE
@@ -90,9 +90,26 @@ class BookPostgresProvider implements IDatabaseProvider
         $stmt->bindParam(':author', $data['author']);
         $stmt->bindParam(':image', $data['image'], PDO::PARAM_LOB);
         $stmt->bindParam(':id', $data['id']);
-        $stmt->bindParam(':user_id', $userId);
+        $stmt->bindParam(':user_id', $user_id);
 
         $stmt->execute();
+
+        return $stmt->rowCount() > 0;
+    }
+
+    public function delete(int | string $id, int | string $user_id = null): bool
+    {
+        $stmt = $this->pdo->prepare("
+            DELETE
+            FROM
+                mfb_books
+            WHERE
+                id = ?
+            AND
+                user_id = ?
+        ");
+
+        $stmt->execute([$id, $user_id]);
 
         return $stmt->rowCount() > 0;
     }

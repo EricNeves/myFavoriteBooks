@@ -34,4 +34,12 @@ interface IBookRepository
      * @return bool
      */
     public function update(array $data, int | string $user_id): bool;
+    /**
+     * Method to delete a record
+     *
+     * @param int|string $id
+     * @param int|string $user_id
+     * @return bool
+     */
+    public function delete(int | string $id, int | string $user_id): bool;
 }
