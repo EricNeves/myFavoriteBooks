@@ -14,7 +14,7 @@ class EditBookUseCase implements IEditBookUseCase
     {
     }
 
-    public function execute(EditBookDTO $editBookDTO): mixed
+    public function execute(EditBookDTO $editBookDTO): array
     {
         $validateImage = $this->image->validate($editBookDTO->image());
 

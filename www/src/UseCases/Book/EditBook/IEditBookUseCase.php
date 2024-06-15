@@ -6,5 +6,5 @@ use App\UseCases\Book\EditBook\EditBookDTO;
 
 interface IEditBookUseCase
 {
-    public function execute(EditBookDTO $editBookDTO): mixed;
+    public function execute(EditBookDTO $editBookDTO): array;
 }
