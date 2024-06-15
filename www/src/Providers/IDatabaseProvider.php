@@ -7,7 +7,7 @@ interface IDatabaseProvider
     /**
      * Method to create a new record
      *
-     * @param array $data
+     * @param array $data = ['title' => '', 'author' => '', 'image' => '', 'user_id' => '']
      * @return bool
      */
     public function create(array $data): bool;
@@ -32,7 +32,7 @@ interface IDatabaseProvider
     /**
      * Method to update a record
      *
-     * @param array $data
+     * @param array $data = ['id' => '', 'title' => '', 'author' => '', 'image' => '']
      * @return bool
      */
     public function update(array $data, int | string $userId): bool;

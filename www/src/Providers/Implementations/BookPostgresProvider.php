@@ -73,6 +73,27 @@ class BookPostgresProvider implements IDatabaseProvider
 
     public function update(array $data, int | string $userId): bool
     {
-        throw new Exception("Method not implemented");
+        $stmt = $this->pdo->prepare("
+            UPDATE
+                mfb_books
+            SET
+                title  = :title,
+                author = :author,
+                image  = :image
+            WHERE
+                id = :id
+            AND
+                user_id = :user_id
+        ");
+
+        $stmt->bindParam(':title', $data['title']);
+        $stmt->bindParam(':author', $data['author']);
+        $stmt->bindParam(':image', $data['image'], PDO::PARAM_LOB);
+        $stmt->bindParam(':id', $data['id']);
+        $stmt->bindParam(':user_id', $userId);
+
+        $stmt->execute();
+
+        return $stmt->rowCount() > 0;
     }
 }

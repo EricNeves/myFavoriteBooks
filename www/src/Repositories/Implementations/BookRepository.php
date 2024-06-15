@@ -25,4 +25,9 @@ class BookRepository implements IBookRepository
     {
         return $this->database->findById($id, $user_id);
     }
+
+    public function update(array $data, int | string $user_id): bool
+    {
+        return $this->database->update($data, $user_id);
+    }
 }
