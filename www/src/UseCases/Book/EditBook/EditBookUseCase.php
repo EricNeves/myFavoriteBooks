@@ -26,6 +26,7 @@ class EditBookUseCase implements IEditBookUseCase
             'id'     => $editBookDTO->book_id(),
             'title'  => $editBookDTO->title(),
             'author' => $editBookDTO->author(),
+            'rating' => $editBookDTO->rating(),
             'image'  => $this->image->convertBase64ToBinary($editBookDTO->image()),
         ];
 

@@ -25,6 +25,7 @@ class FetchBooksUseCase implements IFetchBooksUseCase
                 $book['id'],
                 $book['title'],
                 $book['author'],
+                $book['rating'],
                 $book['image'],
                 $book['user_id']
             );

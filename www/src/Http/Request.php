@@ -68,6 +68,10 @@ class Request
             if ($type === 'email' && !filter_var($data[$fieldName], FILTER_VALIDATE_EMAIL)) {
                 throw new Exception("The field ($fieldName) must be a valid email");
             }
+
+            if ($type === 'int' && !is_int($data[$fieldName])) {
+                throw new Exception("The field ($fieldName) must be a integer");
+            }
         }
     }
 

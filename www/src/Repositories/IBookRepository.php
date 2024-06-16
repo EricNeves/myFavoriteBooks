@@ -7,7 +7,7 @@ interface IBookRepository
     /**
      * Method to create a new record
      *
-     * @param array $data = ['title' => '', 'author' => '', 'image' => '', 'user_id' => '']
+     * @param array $data = ['title' => '', 'author' => '', 'rating' => '', 'image' => '', 'user_id' => '']
      * @return bool
      */
     public function save(array $data): bool;
@@ -29,7 +29,7 @@ interface IBookRepository
     /**
      * Method to update a record
      *
-     * @param array $data = ['id' => '', 'title' => '', 'author' => '', 'image' => '']
+     * @param array $data = ['id' => '', 'title' => '', 'author' => '', 'rating' => '', 'image' => '']
      * @param int|string $user_id
      * @return bool
      */

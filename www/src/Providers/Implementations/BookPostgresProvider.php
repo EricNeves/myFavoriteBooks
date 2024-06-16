@@ -17,13 +17,14 @@ class BookPostgresProvider implements IDatabaseProvider
         $stmt = $this->pdo->prepare("
             INSERT
             INTO
-                mfb_books (title, author, image, user_id)
+                mfb_books (title, author, rating, image, user_id)
             VALUES
-                (:title, :author, :image, :user_id)
+                (:title, :author, :rating, :image, :user_id)
         ");
 
         $stmt->bindParam(':title', $data['title']);
         $stmt->bindParam(':author', $data['author']);
+        $stmt->bindParam(':rating', $data['rating']);
         $stmt->bindParam(':image', $data['image'], PDO::PARAM_LOB);
         $stmt->bindParam(':user_id', $data['user_id']);
 
@@ -79,6 +80,7 @@ class BookPostgresProvider implements IDatabaseProvider
             SET
                 title  = :title,
                 author = :author,
+                rating = :rating,
                 image  = :image
             WHERE
                 id = :id
@@ -88,6 +90,7 @@ class BookPostgresProvider implements IDatabaseProvider
 
         $stmt->bindParam(':title', $data['title']);
         $stmt->bindParam(':author', $data['author']);
+        $stmt->bindParam('rating', $data['rating']);
         $stmt->bindParam(':image', $data['image'], PDO::PARAM_LOB);
         $stmt->bindParam(':id', $data['id']);
         $stmt->bindParam(':user_id', $user_id);

@@ -9,14 +9,16 @@ class FetchBooksDTO implements JsonSerializable
     private int|string $id;
     private string $title;
     private string $author;
+    private int $rating;
     private string $image;
     private int|string $user_id;
 
-    public function __construct(int | string $id, string $title, string $author, string $image, int | string $user_id)
+    public function __construct(int | string $id, string $title, string $author, int $rating, string $image, int | string $user_id)
     {
         $this->id      = $id;
         $this->title   = $title;
         $this->author  = $author;
+        $this->rating  = $rating;
         $this->image   = $image;
         $this->user_id = $user_id;
     }
@@ -36,6 +38,11 @@ class FetchBooksDTO implements JsonSerializable
         return $this->author;
     }
 
+    public function rating(): int
+    {
+        return $this->rating;
+    }
+
     public function image(): string
     {
         return $this->image;
@@ -52,6 +59,7 @@ class FetchBooksDTO implements JsonSerializable
             'id'      => $this->id,
             'title'   => $this->title,
             'author'  => $this->author,
+            'rating'  => $this->rating,
             'image'   => $this->image,
             'user_id' => $this->user_id,
         ];

@@ -26,6 +26,7 @@ class CreateBookUseCase implements ICreateBookUseCase
         $fields = [
             'user_id' => $createBookDTO->user_id(),
             'title'   => $createBookDTO->title(),
+            'rating'  => $createBookDTO->rating(),
             'author'  => $createBookDTO->author(),
             'image'   => $binaryImage,
         ];

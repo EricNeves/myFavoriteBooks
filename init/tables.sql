@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS mfb_books (
   id SERIAL PRIMARY KEY,
   title VARCHAR(255) NOT NULL,
   author VARCHAR(255) NOT NULL,
+  rating INT NOT NULL,
   image BYTEA NOT NULL,
   user_id INT NOT NULL,
   FOREIGN KEY (user_id) REFERENCES mfb_users(id)

@@ -23,6 +23,14 @@ class HandleExceptions
                 "message" => $exception->getMessage(),
                 "status"  => 401,
             ],
+            "23503" => [
+                "message" => "Sorry, user not found",
+                "status"  => 401,
+            ],
+            "22P02" => [
+                "message" => "Sorry, invalid data type provided for field book id",
+                "status"  => 400,
+            ],
         ];
 
         if (array_key_exists($exception->getCode(), $errors_code)) {
