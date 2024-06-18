@@ -1,0 +1,61 @@
+<p-dialog
+  header="Add a new book"
+  [modal]="true"
+  [(visible)]="visible"
+  [style]="{ width: '35rem' }"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+>
+  <form [formGroup]="createBookForm" (ngSubmit)="onSubmit()">
+    <label for="title" class="block text-900 font-medium mb-2"
+      >Book Title</label
+    >
+    <input
+      id="title"
+      type="text"
+      placeholder="Title"
+      pInputText
+      autocomplete="off"
+      class="w-full mb-3"
+      formControlName="title"
+    />
+
+    <label for="author" class="block text-900 font-medium mb-2">Author</label>
+    <input
+      id="author"
+      type="text"
+      placeholder="Author"
+      pInputText
+      autocomplete="off"
+      class="w-full mb-3"
+      formControlName="author"
+    />
+
+    <label for="rating" class="block text-900 font-medium mb-2">Rating</label>
+    <p-rating [cancel]="false" formControlName="rating" />
+
+    <label for="image" class="block text-900 font-medium mb-2 mt-2"
+      >Image</label
+    >
+    <p-fileUpload
+      mode="basic"
+      id="image"
+      chooseLabel="Choose"
+      chooseIcon="pi pi-upload"
+      accept="image/*"
+      maxFileSize="1000000"
+      [customUpload]="true"
+      (onSelect)="onUpload($event)"
+    />
+
+    <button
+      pButton
+      pRipple
+      label="Add Book"
+      class="w-full mt-2"
+      severity="secondary"
+      [loading]="submited"
+    ></button>
+  </form>
+</p-dialog>
+
+<p-toast position="bottom-right"></p-toast>
