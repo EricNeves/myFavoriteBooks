@@ -28,12 +28,8 @@ export class MenuBarComponent {
 
   items: MenuItem[] = [
     {
-      label: 'Dashboard',
-      icon: 'pi pi-home',
-    },
-    {
       label: 'Books',
-      icon: 'pi pi-book',
+      icon: 'pi pi-cloud-upload',
       command: () => {
         if (this.visible) {
           this.visible = false;

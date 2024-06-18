@@ -1,3 +1,7 @@
-<p-menubar [model]="items" />
+<p-menubar [model]="items">
+  <ng-template pTemplate="start">
+    <i class="pi pi-book"></i> My Favorite Books
+  </ng-template>
+</p-menubar>
 
 <app-create-book-form [visible]="visible"></app-create-book-form>
