@@ -69,8 +69,27 @@ class Request
                 throw new Exception("The field ($fieldName) must be a valid email");
             }
 
-            if ($type === 'int' && !is_int($data[$fieldName])) {
+            if ($type === 'number' && !is_numeric($data[$fieldName])) {
                 throw new Exception("The field ($fieldName) must be a integer");
+            }
+
+            $minLengthType = explode(':', $type);
+            $maxLengthType = explode(':', $type);
+
+            if (count($minLengthType) === 2 && $minLengthType[0] === 'min' && !is_numeric($data[$fieldName]) && strlen($data[$fieldName]) < $minLengthType[1]) {
+                throw new Exception("The field ($fieldName) must be at least {$minLengthType[1]} characters");
+            }
+
+            if (count($maxLengthType) === 2 && $maxLengthType[0] === 'max' && !is_numeric($data[$fieldName]) && strlen($data[$fieldName]) > $maxLengthType[1]) {
+                throw new Exception("The field ($fieldName) must be at most {$maxLengthType[1]} characters");
+            }
+
+            if (count($minLengthType) === 2 && $minLengthType[0] === 'min' && is_numeric($data[$fieldName]) && $data[$fieldName] < $minLengthType[1]) {
+                throw new Exception("The field ($fieldName) must be at least {$minLengthType[1]} length");
+            }
+
+            if (count($maxLengthType) === 2 && $maxLengthType[0] === 'max' && is_numeric($data[$fieldName]) && $data[$fieldName] > $maxLengthType[1]) {
+                throw new Exception("The field ($fieldName) must be at most {$maxLengthType[1]} length");
             }
         }
     }

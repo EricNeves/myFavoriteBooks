@@ -16,10 +16,10 @@ class EditBookController
     {
         $body = $request->body();
 
-        $request->validateField($body, 'title', 'string');
-        $request->validateField($body, 'author', 'string');
-        $request->validateField($body, 'rating', 'int');
-        $request->validateField($body, 'base64_image');
+        $request->validateField($body, 'title', 'string|min:1|max:255');
+        $request->validateField($body, 'author', 'string|min:1|max:255');
+        $request->validateField($body, 'rating', 'number|min:1|max:5');
+        $request->validateField($body, 'base64_image', 'string');
 
         $editUserDTO = new EditBookDTO(
             $body['title'],
