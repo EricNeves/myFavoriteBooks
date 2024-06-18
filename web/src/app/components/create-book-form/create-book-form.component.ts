@@ -1,9 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { FileUploadModule } from 'primeng/fileupload';
+import { FileUpload, FileUploadModule } from 'primeng/fileupload';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
@@ -33,6 +33,8 @@ import { BookService } from '@app/services/book.service';
 })
 export class CreateBookFormComponent implements OnInit {
   @Input() visible: boolean = false;
+
+  @ViewChild('fileUpload') fileUpload!: FileUpload;
 
   submited: boolean = false;
   createBookForm!: FormGroup;
@@ -77,6 +79,7 @@ export class CreateBookFormComponent implements OnInit {
         });
         this.submited = false;
         this.createBookForm.reset();
+        this.fileUpload.clear();
         this.visible = false;
       },
       error: ({ error: responseError }: any) => {
