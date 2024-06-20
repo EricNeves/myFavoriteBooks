@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 
 import { MenubarModule } from 'primeng/menubar';
@@ -8,6 +8,10 @@ import { MessageService } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
 
 import { CreateBookFormComponent } from '@components/create-book-form/create-book-form.component';
+import { UserService } from '@app/services/user.service';
+import { User } from '@app/models/user.model';
+import { LocalstorageService } from '@app/services/localstorage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-menu-bar',
@@ -23,8 +27,11 @@ import { CreateBookFormComponent } from '@components/create-book-form/create-boo
   templateUrl: './menu-bar.component.html',
   styleUrl: './menu-bar.component.css',
 })
-export class MenuBarComponent {
+export class MenuBarComponent implements OnInit {
   visible: boolean = false;
+  user: Partial<User> = {
+    username: '',
+  };
 
   items: MenuItem[] = [
     {
@@ -51,5 +58,22 @@ export class MenuBarComponent {
     },
   ];
 
-  constructor(private message: MessageService) {}
+  constructor(
+    private message: MessageService,
+    private userService: UserService,
+    private localStorage: LocalstorageService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    this.userService.getUser().subscribe({
+      next: (user: any) => {
+        this.user = user.data;
+      },
+      error: ({ error }) => {
+        this.localStorage.removeToken();
+        this.router.navigate(['/']);
+      },
+    });
+  }
 }

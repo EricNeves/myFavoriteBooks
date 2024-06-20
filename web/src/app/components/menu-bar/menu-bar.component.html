@@ -4,4 +4,12 @@
   </ng-template>
 </p-menubar>
 
+@if (user.username) {
+  <span id="username"
+    >Welcome, <span id="name">{{ user.username }} 👋</span></span
+  >
+}
+
 <app-create-book-form [visible]="visible"></app-create-book-form>
+
+<p-toast position="bottom-right"></p-toast>

@@ -1,0 +1,9 @@
+#username {
+  font-size: 1.2rem;
+  line-height: 3;
+  color: #4b5563;
+}
+
+#username #name {
+  font-weight: 500;
+}
