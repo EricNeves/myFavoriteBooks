@@ -70,8 +70,12 @@ export class AuthFormComponent implements OnInit {
           summary: 'Error',
           detail: responseError.error,
         });
+
+        this.submited = false;
       },
     });
+
+    this.submited = false;
   }
 
   getMessageError(controlName: string): void {
