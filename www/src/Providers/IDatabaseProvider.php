@@ -5,6 +5,12 @@ namespace App\Providers;
 interface IDatabaseProvider
 {
     /**
+     * Capture the last inserted ID
+     *
+     * @return int|string
+     */
+    public function lastInsertId(): int | string;
+    /**
      * Method to create a new record
      *
      * @param array
