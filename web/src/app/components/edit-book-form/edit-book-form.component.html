@@ -1,11 +1,11 @@
 <p-dialog
-  header="Add a new book"
+  header="Update Book"
   [modal]="true"
   [(visible)]="visible"
   [style]="{ width: '35rem' }"
   [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
 >
-  <form [formGroup]="createBookForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="editBookForm" (ngSubmit)="onSubmit()">
     <label for="title" class="block text-900 font-medium mb-2"
       >Book Title</label
     >
@@ -50,7 +50,7 @@
     <button
       pButton
       pRipple
-      label="Add Book"
+      label="Update Book"
       class="w-full mt-2"
       severity="primary"
       [loading]="submited"

@@ -10,10 +10,29 @@ import { environment } from 'src/environments/environment';
 export class BookService {
   constructor(private http: HttpClient) {}
 
-  addBook(book: Book): Observable<Book> {
-    return this.http.post<Book>(
+  addBook(book: Book): Observable<{ data: Book }> {
+    return this.http.post<{ data: Book }>(
       `${environment.api.baseUrl}/books/create`,
       book
+    );
+  }
+
+  allBooks(): Observable<{ data: Book[] }> {
+    return this.http.get<{ data: Book[] }>(
+      `${environment.api.baseUrl}/books/all`
+    );
+  }
+
+  updateBook(book: Book, bookID: number | string): Observable<Book> {
+    return this.http.put<Book>(
+      `${environment.api.baseUrl}/books/edit/${bookID}`,
+      book
+    );
+  }
+
+  deleteBook(bookID: number | string): Observable<{ data: Book }> {
+    return this.http.delete<{ data: Book }>(
+      `${environment.api.baseUrl}/books/remove/${bookID}`
     );
   }
 }

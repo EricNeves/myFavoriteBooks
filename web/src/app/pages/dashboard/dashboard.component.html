@@ -1,3 +1,4 @@
 <section class="p-4 border-round w-full lg:w-9 m-auto">
-  <app-menu-bar></app-menu-bar>
+  <app-menu-bar (onVisibleCreateBookForm)="getEventOpenCreateBookForm($event)"></app-menu-bar>
+  <app-books-card [isVisibleCreateBookForm]="isVisibleCreateBookForm"></app-books-card>
 </section>

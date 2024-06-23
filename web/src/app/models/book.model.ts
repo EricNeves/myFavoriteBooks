@@ -4,7 +4,7 @@ export interface Book {
   author: string;
   rating: number;
   image?: string;
-  base64_image?: string;
   user_id?: number;
+  book_id?: number;
   [key: string]: any;
 }
