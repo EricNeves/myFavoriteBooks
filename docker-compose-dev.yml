@@ -4,7 +4,7 @@ services:
     container_name: mfb_www
     build: 
       context: ./www
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     volumes:
       - ./www:/var/www/public
     depends_on:
@@ -15,7 +15,7 @@ services:
       context: ./www
       dockerfile: ./nginx/Dockerfile
     ports:
-      - 8000:80
+      - 8000:8000
   postgres:
     container_name: mfb_postgres
     image: postgres:15.4
