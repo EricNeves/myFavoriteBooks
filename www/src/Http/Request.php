@@ -44,7 +44,7 @@ class Request
     }
 
     /**
-     * Function to validate the request fields
+     * Simple function to validate the request fields
      *
      * @param array $data ['field' => 'value']
      * @param string $fieldName ['field']
@@ -120,7 +120,7 @@ class Request
     /**
      * Function to get the user
      */
-    public function user()
+    public function user(): stdClass | null
     {
         return $this->user;
     }
@@ -128,7 +128,7 @@ class Request
     /**
      * Function to set the user
      */
-    public function setUser(stdClass $user)
+    public function setUser(stdClass $user): void
     {
         $this->user = $user;
     }

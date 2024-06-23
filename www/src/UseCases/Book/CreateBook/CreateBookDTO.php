@@ -4,13 +4,7 @@ namespace App\UseCases\Book\CreateBook;
 
 class CreateBookDTO
 {
-    private string $title;
-    private string $author;
-    private int $rating;
-    private string $image;
-    private string $user_id;
-
-    public function __construct(string $title, string $author, int $rating, string $image, int | string $user_id)
+    public function __construct(private string $title, private string $author, private int $rating, private string $image, private int | string $user_id)
     {
         $this->title   = $title;
         $this->author  = $author;
@@ -46,12 +40,6 @@ class CreateBookDTO
 
     public function toArray(): array
     {
-        return [
-            'title'   => $this->title,
-            'author'  => $this->author,
-            'rating'  => $this->rating,
-            'image'   => $this->image,
-            'user_id' => $this->user_id,
-        ];
+        return get_object_vars($this);
     }
 }

@@ -1,4 +1,7 @@
 <?php
+
+// error_reporting(0);
+
 use App\Http\Router;
 
 require_once __DIR__ . '/vendor/autoload.php';

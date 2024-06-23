@@ -8,10 +8,15 @@ class Postgres
 {
     public static function connect(array $config): PDO
     {
-        $pdo = new PDO(
-            "pgsql:host={$config['pgsql']['host']};port={$config['pgsql']['port']};dbname={$config['pgsql']['database']};",
-            $config['pgsql']['username'],
-            $config['pgsql']['password']);
+        $host     = $config['pgsql']['host'];
+        $port     = $config['pgsql']['port'];
+        $dbname   = $config['pgsql']['database'];
+        $username = $config['pgsql']['username'];
+        $password = $config['pgsql']['password'];
+
+        $dns = "pgsql:host=$host;port=$port;dbname=$dbname;";
+
+        $pdo = new PDO($dns, $username, $password);
 
         return $pdo;
     }

@@ -4,15 +4,14 @@ namespace App\UseCases\Book\FetchBook;
 
 class FetchBookDTO
 {
-    private int|string $id;
-    private string $title;
-    private string $author;
-    private int $rating;
-    private string $image;
-    private int|string $book_id;
-
-    public function __construct(int | string $id, string $title, string $author, int $rating, string $image, int | string $book_id)
-    {
+    public function __construct(
+        private int | string $id,
+        private string $title,
+        private string $author,
+        private int $rating,
+        private string $image,
+        private int | string $book_id
+    ) {
         $this->id      = $id;
         $this->title   = $title;
         $this->author  = $author;
@@ -53,13 +52,6 @@ class FetchBookDTO
 
     public function toArray(): array
     {
-        return [
-            'id'      => $this->id,
-            'title'   => $this->title,
-            'author'  => $this->author,
-            'rating'  => $this->rating,
-            'image'   => $this->image,
-            'book_id' => $this->book_id,
-        ];
+        return get_object_vars($this);
     }
 }

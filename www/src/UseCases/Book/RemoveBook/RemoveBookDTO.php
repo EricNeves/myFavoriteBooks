@@ -4,10 +4,7 @@ namespace App\UseCases\Book\RemoveBook;
 
 class RemoveBookDTO
 {
-    private int|string $book_id;
-    private int|string $user_id;
-
-    public function __construct(int | string $book_id, int | string $user_id)
+    public function __construct(private int | string $book_id, private int | string $user_id)
     {
         $this->book_id = $book_id;
         $this->user_id = $user_id;
@@ -25,9 +22,6 @@ class RemoveBookDTO
 
     public function toArray(): array
     {
-        return [
-            'book_id' => $this->book_id,
-            'user_id' => $this->user_id,
-        ];
+        return get_object_vars($this);
     }
 }

@@ -29,12 +29,8 @@ class AuthenticateUserUseCase implements IAuthenticateUserUseCase
             throw new AuthorizationException("Sorry, email or password is incorrect.", 401);
         }
 
-        $data = [
-            'id'       => $authenticateUser['id'],
-            'username' => $authenticateUser['username'],
-            'email'    => $authenticateUser['email'],
-        ];
+        unset($authenticateUser['password']);
 
-        return $this->jwt->generateJWT($data);
+        return $this->jwt->generateJWT($authenticateUser);
     }
 }

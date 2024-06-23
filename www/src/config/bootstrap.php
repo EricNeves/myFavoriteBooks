@@ -7,6 +7,9 @@ use App\Http\Response;
  * Function to dispatch the routes
  *
  * @param array $routes
+ * @param array $factories
+ * @param array $middlewares
+ * @param array $databaseConfig
  * @return void
  */
 function dispatch(array $routes, array $factories, array $middlewares, array $databaseConfig): void

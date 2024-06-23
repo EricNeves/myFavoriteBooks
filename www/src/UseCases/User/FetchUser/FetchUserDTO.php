@@ -4,11 +4,7 @@ namespace App\UseCases\User\FetchUser;
 
 class FetchUserDTO
 {
-    private int|string $id;
-    private string $username;
-    private string $email;
-
-    public function __construct(int | string $id, string $username, string $email)
+    public function __construct(private int | string $id, private string $username, private string $email)
     {
         $this->id       = $id;
         $this->username = $username;
@@ -32,10 +28,6 @@ class FetchUserDTO
 
     public function toArray(): array
     {
-        return [
-            'id'       => $this->id,
-            'username' => $this->username,
-            'email'    => $this->email,
-        ];
+        return get_object_vars($this);
     }
 }
