@@ -37,6 +37,6 @@ class CreateBookUseCase implements ICreateBookUseCase
             throw new Exception("Sorry, we couldn't create the book. Please try again.");
         }
 
-        return $createBookDTO->toArray();
+        return [ ...['id' => $this->bookRepository->lastInsertId()], ...$createBookDTO->toArray()];
     }
 }
