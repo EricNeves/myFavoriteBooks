@@ -2,10 +2,14 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
+
+import { JsonPipe } from '@angular/common';
+import { Book } from '@app/models/book.model';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -18,37 +22,50 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
 import { RatingModule } from 'primeng/rating';
-import { Book } from '@app/models/book.model';
 import { BookService } from '@app/services/book.service';
 
 @Component({
-  selector: 'app-create-book-form',
+  selector: 'app-edit-book-form',
   standalone: true,
   imports: [
-    ReactiveFormsModule,
+    ToastModule,
     DialogModule,
+    JsonPipe,
+    ReactiveFormsModule,
+    FileUploadModule,
     InputTextModule,
     ButtonModule,
-    ToastModule,
-    MessagesModule,
     RatingModule,
-    FileUploadModule,
+    MessagesModule,
   ],
   providers: [MessageService],
-  templateUrl: './create-book-form.component.html',
-  styleUrl: './create-book-form.component.css',
+  templateUrl: './edit-book-form.component.html',
+  styleUrl: './edit-book-form.component.css',
 })
-export class CreateBookFormComponent implements OnInit {
+export class EditBookFormComponent implements OnInit, OnChanges {
+  @Input() book!: Book;
   @Input() visible: boolean = false;
-  @Output() newBooks = new EventEmitter<Book>();
+
+  @Output() bookUpdated = new EventEmitter<Book>();
 
   @ViewChild('fileUpload') fileUpload!: FileUpload;
 
   submited: boolean = false;
-  createBookForm!: FormGroup;
+
+  editBookForm!: FormGroup;
+
+  ngOnChanges(): void {
+    if (this.book) {
+      this.editBookForm.patchValue({
+        title: this.book.title,
+        author: this.book.author,
+        rating: this.book.rating,
+      });
+    }
+  }
 
   ngOnInit(): void {
-    this.createBookForm = this.formBuilder.group({
+    this.editBookForm = this.formBuilder.group({
       title: ['', [Validators.required]],
       author: ['', [Validators.required]],
       rating: [
@@ -68,38 +85,37 @@ export class CreateBookFormComponent implements OnInit {
   onSubmit(): void {
     this.submited = true;
 
-    if (this.createBookForm.invalid) {
-      Object.keys(this.createBookForm.controls).forEach((controlName) => {
+    if (this.editBookForm.invalid) {
+      Object.keys(this.editBookForm.controls).forEach((controlName) => {
         this.getMessageError(controlName);
       });
       this.submited = false;
       return;
     }
 
-    const data: Book = this.createBookForm.value;
+    const data: Book = { ...this.book, ...this.editBookForm.value };
 
-    this.bookService.addBook(data).subscribe({
+    this.bookService.updateBook(data, this.book.id ?? '').subscribe({
       next: (response) => {
         this.message.add({
           severity: 'success',
           summary: 'Success',
-          detail: 'Book added successfully',
+          detail: 'Book updated successfully',
         });
+        this.bookUpdated.emit(data);
         this.submited = false;
-        this.newBooks.emit(response.data);
-        this.createBookForm.reset();
-        this.fileUpload.clear();
         this.visible = false;
+        this.editBookForm.reset();
+        this.fileUpload.clear();
       },
-      error: ({ error: responseError }: any) => {
+      error: (err) => {
         this.message.add({
           severity: 'error',
           summary: 'Error',
-          detail: responseError.error,
+          detail: err.error.error,
         });
         this.fileUpload.clear();
         this.submited = false;
-        return;
       },
     });
   }
@@ -112,7 +128,7 @@ export class CreateBookFormComponent implements OnInit {
     reader.onload = (e) => {
       const base64String = reader.result as string;
 
-      this.createBookForm.patchValue({
+      this.editBookForm.patchValue({
         image: base64String,
       });
     };
@@ -121,7 +137,7 @@ export class CreateBookFormComponent implements OnInit {
   }
 
   getMessageError(controlName: string): void {
-    const control = this.createBookForm.get(controlName);
+    const control = this.editBookForm.get(controlName);
 
     if (control?.errors) {
       if (control?.errors['required']) {

@@ -1,0 +1,43 @@
+<section class="books">
+  @for (bookItem of books; track $index) {
+  <div class="book-card">
+    <div class="book-card-header">
+      <img src="{{ bookItem.image }}" alt="{{ bookItem.title }}" />
+    </div>
+
+    <div class="book-card-body">
+      <h4>{{ bookItem.title }}</h4>
+      <div>
+        <p>{{ bookItem.author }}</p>
+        <p-rating
+          [cancel]="false"
+          [disabled]="true"
+          [(ngModel)]="bookItem.rating"
+        ></p-rating>
+      </div>
+    </div>
+
+    <div class="book-card-btns">
+      <button class="btn btn-warning" (click)="openDialogEditBook(bookItem)">
+        <i class="pi pi-pen-to-square"></i>
+      </button>
+      <button class="btn btn-danger" (click)="openDialogDeleteBook(bookItem)">
+        <i class="pi pi-trash"></i>
+      </button>
+    </div>
+  </div>
+  }
+</section>
+
+<app-edit-book-form
+  [book]="book"
+  (bookUpdated)="updatedBook($event)"
+  [visible]="isVisibleEditBookForm"
+></app-edit-book-form>
+<app-create-book-form
+  (newBooks)="updatedAllBooks($event)"
+  [visible]="isVisibleCreateBookForm"
+></app-create-book-form>
+
+<p-toast position="bottom-right"></p-toast>
+<p-confirmDialog></p-confirmDialog>

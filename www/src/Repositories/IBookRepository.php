@@ -5,6 +5,12 @@ namespace App\Repositories;
 interface IBookRepository
 {
     /**
+     * Capture the last inserted ID
+     *
+     * @return int|string
+     */
+    public function lastInsertId(): int | string;
+    /**
      * Method to create a new record
      *
      * @param array $data = ['title' => '', 'author' => '', 'rating' => '', 'image' => '', 'user_id' => '']

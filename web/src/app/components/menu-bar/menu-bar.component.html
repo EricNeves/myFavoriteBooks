@@ -10,6 +10,6 @@
   >
 }
 
-<app-create-book-form [visible]="visible"></app-create-book-form>
+<app-edit-profile-form (userUpdated)="onUserUpdated($event)" [user]="user" [visible]="isVisibleEditProfileForm"></app-edit-profile-form>
 
 <p-toast position="bottom-right"></p-toast>

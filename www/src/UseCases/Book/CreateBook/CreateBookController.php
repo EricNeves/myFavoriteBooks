@@ -20,13 +20,13 @@ class CreateBookController
         $request->validateField($body, 'title', 'string|min:1|max:255');
         $request->validateField($body, 'author', 'string|min:1|max:255');
         $request->validateField($body, 'rating', 'number|min:1|max:5');
-        $request->validateField($body, 'base64_image', 'string');
+        $request->validateField($body, 'image', 'string');
 
         $createBookDTO = new CreateBookDTO(
             $body['title'],
             $body['author'],
             $body['rating'],
-            $body['base64_image'],
+            $body['image'],
             $request->user()->id,
         );
 

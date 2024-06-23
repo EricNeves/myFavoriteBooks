@@ -66,7 +66,6 @@ export class RegisterFormComponent implements OnInit {
           detail: response.data,
         });
         this.submited = false;
-        this.router.navigate(['/']);
       },
       error: ({ error: responseError }: any) => {
         this.message.add({

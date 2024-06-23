@@ -12,6 +12,11 @@ class BookPostgresProvider implements IDatabaseProvider
     {
     }
 
+    public function lastInsertId(): int | string
+    {
+        return $this->pdo->lastInsertId();
+    }
+
     public function create(array $data): bool
     {
         $stmt = $this->pdo->prepare("

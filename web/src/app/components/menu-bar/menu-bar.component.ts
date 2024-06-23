@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 
 import { MenubarModule } from 'primeng/menubar';
@@ -8,6 +8,8 @@ import { MessageService } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
 
 import { CreateBookFormComponent } from '@components/create-book-form/create-book-form.component';
+import { EditProfileFormComponent } from '../edit-profile-form/edit-profile-form.component';
+
 import { UserService } from '@app/services/user.service';
 import { User } from '@app/models/user.model';
 import { LocalstorageService } from '@app/services/localstorage.service';
@@ -22,13 +24,18 @@ import { Router } from '@angular/router';
     ToastModule,
     MessagesModule,
     CreateBookFormComponent,
+    EditProfileFormComponent,
   ],
   providers: [MessageService],
   templateUrl: './menu-bar.component.html',
   styleUrl: './menu-bar.component.css',
 })
 export class MenuBarComponent implements OnInit {
-  visible: boolean = false;
+  @Output() onVisibleCreateBookForm = new EventEmitter<boolean>();
+  isVisibleCreateBookForm: boolean = false;
+
+  isVisibleEditProfileForm: boolean = false;
+
   user: Partial<User> = {
     username: '',
   };
@@ -38,20 +45,41 @@ export class MenuBarComponent implements OnInit {
       label: 'Books',
       icon: 'pi pi-cloud-upload',
       command: () => {
-        if (this.visible) {
-          this.visible = false;
-        }
+        this.onVisibleCreateBookForm.emit(false);
+        this.isVisibleCreateBookForm = false;
       },
       items: [
         {
           label: 'New',
           icon: 'pi pi-plus',
           command: () => {
-            if (this.visible) {
-              this.visible = false;
-            } else {
-              this.visible = true;
-            }
+            this.isVisibleCreateBookForm = !this.isVisibleCreateBookForm;
+
+            this.onVisibleCreateBookForm.emit(this.isVisibleCreateBookForm);
+          },
+        },
+      ],
+    },
+    {
+      label: 'Profile',
+      icon: 'pi pi-user',
+      command: () => {
+        this.isVisibleEditProfileForm = this.isVisibleEditProfileForm = false;
+      },
+      items: [
+        {
+          label: 'Edit',
+          icon: 'pi pi-pencil',
+          command: () => {
+            this.isVisibleEditProfileForm = !this.isVisibleEditProfileForm;
+          },
+        },
+        {
+          label: 'Logout',
+          icon: 'pi pi-sign-out',
+          command: () => {
+            this.localStorage.removeToken();
+            this.router.navigate(['/']);
           },
         },
       ],
@@ -59,7 +87,6 @@ export class MenuBarComponent implements OnInit {
   ];
 
   constructor(
-    private message: MessageService,
     private userService: UserService,
     private localStorage: LocalstorageService,
     private router: Router
@@ -75,5 +102,9 @@ export class MenuBarComponent implements OnInit {
         this.router.navigate(['/']);
       },
     });
+  }
+
+  onUserUpdated(updatedUser: User): void {
+    this.user = { ...this.user, ...updatedUser };
   }
 }

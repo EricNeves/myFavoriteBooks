@@ -19,11 +19,18 @@ export class UserService {
     );
   }
 
-  login(user: User): Observable<User> {
-    return this.http.post<User>(`${environment.api.baseUrl}/users/login`, user);
+  login(user: any): Observable<any> {
+    return this.http.post<any>(`${environment.api.baseUrl}/users/login`, user);
   }
 
   getUser(): Observable<User> {
     return this.http.get<User>(`${environment.api.baseUrl}/users/fetch`);
+  }
+
+  updateUser(user: User): Observable<{ data: User }> {
+    return this.http.put<{ data: User }>(
+      `${environment.api.baseUrl}/users/edit`,
+      user
+    );
   }
 }

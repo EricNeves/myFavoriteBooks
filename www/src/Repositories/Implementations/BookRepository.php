@@ -11,6 +11,11 @@ class BookRepository implements IBookRepository
     {
     }
 
+    public function lastInsertId(): int | string
+    {
+        return $this->database->lastInsertId();
+    }
+
     public function save(array $data): bool
     {
         return $this->database->create($data);

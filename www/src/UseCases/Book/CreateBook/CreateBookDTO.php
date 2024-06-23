@@ -4,8 +4,13 @@ namespace App\UseCases\Book\CreateBook;
 
 class CreateBookDTO
 {
-    public function __construct(private string $title, private string $author, private int $rating, private string $image, private int | string $user_id)
-    {
+    public function __construct(
+        private string $title,
+        private string $author,
+        private int $rating,
+        private string $image,
+        private int | string $user_id
+    ) {
         $this->title   = $title;
         $this->author  = $author;
         $this->rating  = $rating;
