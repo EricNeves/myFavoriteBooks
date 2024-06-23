@@ -1,0 +1,43 @@
+version: '3'
+services:
+  www:
+    container_name: mfb_www
+    build: 
+      context: ./www
+      dockerfile: Dockerfile
+    volumes:
+      - ./www:/var/www/public
+    depends_on:
+      - nginx_api
+  nginx_api:
+    container_name: mfb_nginx_www
+    build: 
+      context: ./www
+      dockerfile: ./nginx/Dockerfile
+    ports:
+      - 8000:8000
+  postgres:
+    container_name: mfb_postgres
+    image: postgres:15.4
+    environment:
+      POSTGRES_USER: ${PG_PROD_USERNAME}
+      POSTGRES_PASSWORD: ${PG_PROD_PASSWORD}
+      POSTGRES_DB: ${PG_PROD_DATABASE}
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_db_data:/var/lib/postgresql/data
+      - ./init:/init
+      - ./init/tables.sql:/docker-entrypoint-initdb.d/tables.sql
+  web:
+    container_name: mfb_web
+    build: 
+      context: ./web
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+    depends_on:
+      - nginx_api
+
+volumes:
+  postgres_db_data:
