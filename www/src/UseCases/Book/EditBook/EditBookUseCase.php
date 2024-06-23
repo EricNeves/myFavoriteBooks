@@ -16,7 +16,9 @@ class EditBookUseCase implements IEditBookUseCase
 
     public function execute(EditBookDTO $editBookDTO): array
     {
-        $validateImage = $this->image->validate($editBookDTO->image());
+        $image = $this->image->removeImageDataPrefix($editBookDTO->image());
+
+        $validateImage = $this->image->validate($image);
 
         if (!$validateImage) {
             throw new Exception("Invalid image type. Please, use only PNG, JPEG or JPG.");
@@ -27,7 +29,7 @@ class EditBookUseCase implements IEditBookUseCase
             'title'  => $editBookDTO->title(),
             'author' => $editBookDTO->author(),
             'rating' => $editBookDTO->rating(),
-            'image'  => $this->image->convertBase64ToBinary($editBookDTO->image()),
+            'image'  => $this->image->convertBase64ToBinary($image),
         ];
 
         $updateBook = $this->bookRepository->update($fields, $editBookDTO->user_id());
