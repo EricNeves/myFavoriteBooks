@@ -25,7 +25,7 @@ class HandleExceptions
             ],
             "23503" => [
                 "message" => "Sorry, user not found",
-                "status"  => 401,
+                "status"  => 400,
             ],
             "22P02" => [
                 "message" => "Sorry, invalid data type provided for field book id",

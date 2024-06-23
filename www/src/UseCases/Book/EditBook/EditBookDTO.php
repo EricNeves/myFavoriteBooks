@@ -4,15 +4,14 @@ namespace App\UseCases\Book\EditBook;
 
 class EditBookDTO
 {
-    private string $title;
-    private string $author;
-    private int $rating;
-    private string $image;
-    private int|string $book_id;
-    private int|string $user_id;
-
-    public function __construct(string $title, string $author, int $rating, string $image, int | string $book_id, int | string $user_id)
-    {
+    public function __construct(
+        private string $title,
+        private string $author,
+        private int $rating,
+        private string $image,
+        private int | string $book_id,
+        private int | string $user_id
+    ) {
         $this->title   = $title;
         $this->author  = $author;
         $this->rating  = $rating;
@@ -53,11 +52,6 @@ class EditBookDTO
 
     public function toArray(): array
     {
-        return [
-            'title'  => $this->title,
-            'author' => $this->author,
-            'rating' => $this->rating,
-            'image'  => $this->image,
-        ];
+        return get_object_vars($this);
     }
 }

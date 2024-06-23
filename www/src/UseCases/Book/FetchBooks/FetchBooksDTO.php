@@ -6,15 +6,14 @@ use JsonSerializable;
 
 class FetchBooksDTO implements JsonSerializable
 {
-    private int|string $id;
-    private string $title;
-    private string $author;
-    private int $rating;
-    private string $image;
-    private int|string $user_id;
-
-    public function __construct(int | string $id, string $title, string $author, int $rating, string $image, int | string $user_id)
-    {
+    public function __construct(
+        private int | string $id,
+        private string $title,
+        private string $author,
+        private int $rating,
+        private string $image,
+        private int | string $user_id
+    ) {
         $this->id      = $id;
         $this->title   = $title;
         $this->author  = $author;
@@ -55,13 +54,6 @@ class FetchBooksDTO implements JsonSerializable
 
     public function jsonSerialize(): array
     {
-        return [
-            'id'      => $this->id,
-            'title'   => $this->title,
-            'author'  => $this->author,
-            'rating'  => $this->rating,
-            'image'   => $this->image,
-            'user_id' => $this->user_id,
-        ];
+        return get_object_vars($this);
     }
 }

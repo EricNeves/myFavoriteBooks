@@ -2,11 +2,12 @@
 
 namespace App\Http;
 
+use Exception;
 use stdClass;
 
 class JWT
 {
-    public function generateJWT(array $data = [])
+    public function generateJWT(array $data = []): string
     {
         $header  = json_encode(['alg' => 'HS256', 'typ' => 'JWT']);
         $payload = json_encode($data);
@@ -38,19 +39,23 @@ class JWT
         return $payload;
     }
 
-    protected function signature(string $header, string $payload): string
+    private function signature(string $header, string $payload): string
     {
+        if (!isset($_ENV['JWT_SECRET'])) {
+            throw new Exception('JWT_SECRET not defined in env.');
+        }
+
         $signature = hash_hmac("sha256", "$header.$payload", $_ENV['JWT_SECRET'], true);
 
         return $this->base64url_encode($signature);
     }
 
-    protected function base64url_encode(string $data): string
+    private function base64url_encode(string $data): string
     {
         return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
     }
 
-    protected function base64url_decode(string $data): stdClass
+    private function base64url_decode(string $data): stdClass
     {
         $padding = strlen($data) % 4;
 

@@ -4,9 +4,7 @@ namespace App\UseCases\User\EditUser;
 
 class EditUserDTO
 {
-    private string $username;
-
-    public function __construct(string $username)
+    public function __construct(private string $username)
     {
         $this->username = $username;
     }
