@@ -20,9 +20,9 @@ services:
     container_name: mfb_postgres
     image: postgres:15.4
     environment:
-      POSTGRES_USER: mfb_user
-      POSTGRES_PASSWORD: mfb_pass
-      POSTGRES_DB: mfb_db
+      POSTGRES_USER: ${PG_PROD_USERNAME}
+      POSTGRES_PASSWORD: ${PG_PROD_PASSWORD}
+      POSTGRES_DB: ${PG_PROD_DATABASE}
     ports:
       - 5432:5432
     volumes:
@@ -33,11 +33,9 @@ services:
     container_name: mfb_web
     build: 
       context: ./web
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     ports:
-      - 4200:4200
-    volumes:
-      - ./web:/app
+      - 80:80
     depends_on:
       - nginx_api
 
