@@ -1,6 +1,10 @@
 <?php
 
-// error_reporting(0);
+error_reporting(0);
+ini_set('upload_max_filesize', '500MB');
+ini_set('post_max_size', '500MB');
+ini_set('max_execution_time', '300');
+ini_set('max_input_time', '300');
 
 use App\Http\Router;
 
