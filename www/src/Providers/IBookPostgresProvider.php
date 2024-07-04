@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-interface IDatabaseProvider
+interface IBookPostgresProvider
 {
     /**
      * Capture the last inserted ID
@@ -18,28 +18,25 @@ interface IDatabaseProvider
      */
     public function create(array $data): bool;
     /**
-     * Method to find a record by email
-     *
-     * @param string $email
-     * @return array
-     */
-    public function findByEmail(string $email): array | bool;
-    /**
      * Method to find a record by id
      *
-     * @param int $id
+     * @param int|string $id
+     * @param int|string $user_id
      * @return array
      */
-    public function findById(int | string $id, int | string $user_id = null): array | bool;
+    public function findById(int | string $id, int | string $user_id): array | bool;
     /**
      * Method to fetch all records
+     *
+     * @param int | string $user_id
+     * @return array
      */
-    public function fetchAll(int | string $user_id = null): array;
+    public function fetchAll(int | string $user_id): array;
     /**
      * Method to update a record
      *
      * @param array $data
-     * @param int $user_id
+     * @param int | string $user_id
      * @return bool
      */
     public function update(array $data, int | string $user_id): bool;
@@ -47,8 +44,8 @@ interface IDatabaseProvider
      * Method to delete a record
      *
      * @param int $id
-     * @param int $user_id
+     * @param int | string $user_id
      * @return bool
      */
-    public function delete(int | string $id, int | string $user_id = null): bool;
+    public function delete(int | string $id, int | string $user_id): bool;
 }

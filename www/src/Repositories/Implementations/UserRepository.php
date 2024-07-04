@@ -2,12 +2,12 @@
 
 namespace App\Repositories\Implementations;
 
-use App\Providers\IDatabaseProvider;
+use App\Providers\IUserPostgresProvider;
 use App\Repositories\IUserRepository;
 
 class UserRepository implements IUserRepository
 {
-    public function __construct(private IDatabaseProvider $database)
+    public function __construct(private IUserPostgresProvider $database)
     {
     }
 

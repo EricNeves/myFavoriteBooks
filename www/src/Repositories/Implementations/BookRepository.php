@@ -2,12 +2,12 @@
 
 namespace App\Repositories\Implementations;
 
-use App\Providers\IDatabaseProvider;
+use App\Providers\IBookPostgresProvider;
 use App\Repositories\IBookRepository;
 
 class BookRepository implements IBookRepository
 {
-    public function __construct(private IDatabaseProvider $database)
+    public function __construct(private IBookPostgresProvider $database)
     {
     }
 

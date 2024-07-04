@@ -2,11 +2,10 @@
 
 namespace App\Providers\Implementations;
 
-use App\Providers\IDatabaseProvider;
-use Exception;
+use App\Providers\IUserPostgresProvider;
 use PDO;
 
-class UserPostgresProvider implements IDatabaseProvider
+class UserPostgresProvider implements IUserPostgresProvider
 {
     public function __construct(private PDO $pdo)
     {
@@ -52,7 +51,7 @@ class UserPostgresProvider implements IDatabaseProvider
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function findById(int | string $id, int | string $user_id = null): array | bool
+    public function findById(int | string $id): array | bool
     {
         $stmt = $this->pdo->prepare("
             SELECT
@@ -66,11 +65,6 @@ class UserPostgresProvider implements IDatabaseProvider
         $stmt->execute([$id]);
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
-
-    public function fetchAll(int | string $user_id = null): array
-    {
-        throw new Exception("Method not implemented");
     }
 
     public function update(array $data, int | string $user_id): bool
@@ -90,10 +84,5 @@ class UserPostgresProvider implements IDatabaseProvider
         ]);
 
         return $stmt->rowCount() > 0;
-    }
-
-    public function delete(int | string $id, null | int | string $user_id = null): bool
-    {
-        throw new Exception("Method not implemented");
     }
 }

@@ -2,11 +2,10 @@
 
 namespace App\Providers\Implementations;
 
-use App\Providers\IDatabaseProvider;
-use Exception;
+use App\Providers\IBookPostgresProvider;
 use PDO;
 
-class BookPostgresProvider implements IDatabaseProvider
+class BookPostgresProvider implements IBookPostgresProvider
 {
     public function __construct(private PDO $pdo)
     {
@@ -38,7 +37,7 @@ class BookPostgresProvider implements IDatabaseProvider
         return $this->pdo->lastInsertId() > 0;
     }
 
-    public function fetchAll(int | string $user_id = null): array
+    public function fetchAll(int | string $user_id): array
     {
         $stmt = $this->pdo->prepare("
             SELECT
@@ -54,12 +53,7 @@ class BookPostgresProvider implements IDatabaseProvider
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function findByEmail(string $email): array | bool
-    {
-        throw new Exception("Method not implemented");
-    }
-
-    public function findById(int | string $id, int | string $user_id = null): array | bool
+    public function findById(int | string $id, int | string $user_id): array | bool
     {
         $stmt = $this->pdo->prepare("
             SELECT
@@ -105,7 +99,7 @@ class BookPostgresProvider implements IDatabaseProvider
         return $stmt->rowCount() > 0;
     }
 
-    public function delete(int | string $id, int | string $user_id = null): bool
+    public function delete(int | string $id, int | string $user_id): bool
     {
         $stmt = $this->pdo->prepare("
             DELETE
