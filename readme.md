@@ -8,7 +8,7 @@
 
 <p align="center">Aplicação desenvolvida com <strong>PHP</strong>, baseado nos princípios <strong>SOLID</strong> e na arquitetura <strong>package-by-feature</strong>, garantindo maior legibilidade e organização do código, bem como a implementação de <strong>testes automatizados</strong>.</p>
 
-<p align="center">Data de criação: Jun 9, 2024</p>
+<p align="center">Data de criação: Jun 9, 2024.</p>
 
 <p align="center">
   <img src="https://img.shields.io/github/last-commit/ericneves/myFavoriteBooks?display_timestamp=author&style=for-the-badge&logo=github" alt="Github">
