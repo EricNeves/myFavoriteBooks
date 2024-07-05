@@ -52,7 +52,7 @@ A arquitetura package-by-feature jutamente com os principais princípios SOLID, 
 
 >
 > [!NOTE]
-> Para adicionar uma nova rota, deve-se levar em consideração os `Use Cases`, `Controllers` e as `Factories`. 
+> Para adicionar uma nova **rota**, deve-se levar em consideração os `Use Cases`, `Controllers` e as `Factories`. 
 >
 
 ```
@@ -69,9 +69,258 @@ A arquitetura package-by-feature jutamente com os principais princípios SOLID, 
 |   |   |   |-- WelcomeMessageUseCase.php
 ```
 
-Em `api.php` referencie o `controller` através do `namespace`, pórem, deve-se remover o `App\UseCases\` matendo apenas o restante, nesse caso, `Intro\WelcomeMessage\WelcomeMessageController`
+Em `routes/api.php` referencie o `controller` através do `namespace`, pórem, deve-se remover o `App\UseCases\` matendo apenas o restante, nesse caso, `Intro\WelcomeMessage\WelcomeMessageController`.
 
-#### Middlewares
+```php 
+
+<?php 
+
+use App\Http\Router;
+
+Route::get('/', 'Intro\WelcomeMessage\WelcomeMessageController');
+
+```
+
+Agora, em `config/factories.php`, associe o **controller** passado na **rota** com a `Factory` do `Use Case`.
+
+>
+> [!NOTE]
+> A `factory` é responsável por criar as **instâncias** e injetar as **depedências**.
+>
+
+```php 
+
+return [
+  'Intro\WelcomeMessage\WelcomeMessageController' => App\Intro\WelcomeMessage\WelcomeMessageFactory.php
+];
+
+```
+
+##### Use Cases
+
+De modo geral, será exemplificado a criação de um Use Case incluindo recursos como Banco de Dados.
+
+```
+|-- Providers
+|   |-- IUserPostgresProvider.php
+|   |-- Implementation
+|   |   |-- UserPostgresProvider.php
+|-- Repositories
+|   |-- UserRepository.php
+|-- UseCases
+|   |-- User
+|   |   |-- FetchUser
+|   |   |   |-- FetchUserController.php
+|   |   |   |-- FetchUserFactory.php
+|   |   |   |-- IFetchUserUseCase.php
+|   |   |   |-- FetchUserUseCase.php
+```
+> [!NOTE]
+> `IUserPostgresProvider` será responsável por definir os contratos de consultas SQL.
+> 
+
+```php 
+
+<?php 
+
+namespace App\Providers;
+
+interface IUserPostgresProvider
+{
+  public function fetch(int $id): array;
+}
+
+```
+
+> [!NOTE]
+> `UserPostgresProvider` será responsável pela implementação das consultas SQL.
+> 
+
+```php 
+
+<?php
+
+namespace App\Providers\Implementations;
+
+use App\Providers\IUserPostgresProvider;
+use PDO;
+
+class UserPostgresProvider implements IUserPostgresProvider
+{
+  public function __construct(private PDO $pdo)
+  {
+  }
+
+  public function fetch(int $id): array 
+  {
+    return $this->pdo->query("...");
+  }
+}
+
+```
+
+> [!NOTE]
+> `IUserRepository` será responsável por definir o contrato de persistência dos dados.
+>
+
+```php
+
+<?php
+
+namespace App\Repositories;
+
+interface IUserRepository
+{
+  public function fetchUser(int $id): array;
+}
+
+```
+
+> [!NOTE]
+> `UserRepository` será responsável por implementar os contratos de `IUserRepository`.
+> No `construtor` de `UserRepository` é passado como inversão de depedência a interface `IUserPostgresProvider`.
+> 
+
+```php 
+
+<?php
+
+namespace App\Repositories\Implementations;
+
+use App\Providers\IUserPostgresProvider;
+use App\Repositories\IUserRepository;
+
+class UserRepository implements IUserRepository
+{
+  public function __construct(private IUserPostgresProvider $database)
+  {
+  }
+
+  public function fetchUser(int $id): array
+  {
+    return $this->database->fetch($id);
+  }  
+}
+
+```
+
+> [!NOTE]
+> `IFetchUserUseCase` será responsável por definir o contrato do Use Case.
+> 
+
+```php 
+
+<?php
+
+namespace App\UseCases\User\FetchUser;
+
+interface IFetchUserUseCase
+{
+  public function execute(int | string $userId): array;
+}
+
+```
+
+> [!NOTE]
+> `FetchUserUseCase` será responsável pelas regras de negócio, realizando operações através do repository.
+> No `construtor` de `FetchUserUseCase` é passado como inversão de depedência o `IUserRepository`.
+> 
+
+```php 
+
+<?php
+
+namespace App\UseCases\User\FetchUser;
+
+use App\Repositories\IUserRepository;
+use App\UseCases\User\FetchUser\IFetchUserUseCase;
+use Exception;
+
+class FetchUserUseCase implements IFetchUserUseCase
+{
+  public function __construct(private IUserRepository $userRepository)
+  {
+  }
+
+  public function execute(int | string $userId): array
+  {
+    $user = $this->userRepository->findById($userId);
+
+    if (!$user) {
+      throw new Exception('Sorry, user not found.');
+    }
+
+    return $user;
+  }
+}
+
+
+```
+
+> [!NOTE]
+> No **construtor** do `controller` é passado como **Inversão de Depedência** a **interface** `IFetchUserUseCase`.
+
+```php
+
+<?php
+
+namespace App\UseCases\User\FetchUser;
+
+use App\Http\Request;
+use App\Http\Response;
+use App\UseCases\User\FetchUser\IFetchUserUseCase;
+
+class FetchUserController
+{
+  public function __construct(private IFetchUserUseCase $fetchUserUseCase)
+  {
+  }
+
+  public function handle(Request $request, Response $response): Response
+  {
+    return $response->json([
+      "data" => $this->fetchUserUseCase->execute($request->user()->id),
+    ]);
+  }
+}
+
+
+```
+
+> [!NOTE]
+> Por último deve-se passar as implementações dos contratos na Factory do Use Case.
+> 
+
+```php 
+
+<?php
+
+namespace App\UseCases\User\FetchUser;
+
+use App\Infrastructure\Postgres;
+use App\Providers\Implementations\UserPostgresProvider;
+use App\Repositories\Implementations\UserRepository;
+use App\UseCases\User\FetchUser\FetchUserController;
+use App\UseCases\User\FetchUser\FetchUserUseCase;
+
+class FetchUserFactory
+{
+    public function generateInstance(array $databaseConfig): FetchUserController
+    {
+        $postgres            = new Postgres();
+        $postgresProvider    = new UserPostgresProvider($postgres::connect($databaseConfig));
+        $userRepository      = new UserRepository($postgresProvider);
+        $fetchUserUseCase    = new FetchUserUseCase($userRepository);
+        $fetchUserController = new FetchUserController($fetchUserUseCase);
+
+        return $fetchUserController;
+    }
+}
+
+
+```
+
+##### Middlewares
 
 #### Execution ⚙️
 
