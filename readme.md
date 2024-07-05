@@ -6,14 +6,14 @@
   <br />
 </h4>
 
-<p align="center">Aplicação desenvolvida com <strong>PHP</strong> puro, baseado nos princípios <strong>SOLID</strong> e na arquitetura <strong>package-by-feature</strong>, garantindo maior legibilidade e organização do código, bem como a implementação de <strong>testes automatizados</strong>.</p>
+<p align="center">Aplicação desenvolvida com <strong>PHP</strong>, baseado nos princípios <strong>SOLID</strong> e na arquitetura <strong>package-by-feature</strong>, garantindo maior legibilidade e organização do código, bem como a implementação de <strong>testes automatizados</strong>.</p>
 
 <p align="center">Data de criação: Jun 9, 2024</p>
 
 <p align="center">
-  <img src="https://img.shields.io/github/last-commit/ericneves/solidprinciples?display_timestamp=author&style=flat-square&logo=github&color=%2303AED2" alt="Github">
-  <img src="https://img.shields.io/github/languages/count/ericneves/solidprinciples?style=flat-square&logo=progress&color=%2341B06E">
-  <img src="https://img.shields.io/github/languages/top/ericneves/solidprinciples?style=flat-square&logo=typescript&logoColor=%23FFBB70&color=%23FFBB70">
+  <img src="https://img.shields.io/github/last-commit/ericneves/myFavoriteBooks?display_timestamp=author&style=for-the-badge&logo=github" alt="Github">
+  <img src="https://img.shields.io/github/languages/count/ericneves/myFavoriteBooks?style=for-the-badge&logo=rocket&color=%23F5455C">
+  <img src="https://img.shields.io/github/languages/top/ericneves/myFavoriteBooks?style=for-the-badge&logo=PHP&logoColor=%23fff&labelColor=%23777BB4&color=%23333">
   <img src="https://img.shields.io/github/license/ericneves/solidprinciples?style=flat-square&logo=git&color=%23F05032">
 </p>
 
@@ -262,7 +262,7 @@ class FetchUserUseCase implements IFetchUserUseCase
 ```
 
 > [!NOTE]
-> No construtor do **controller** é passado como **Inversão de Depedência** a interface `IFetchUserUseCase`.
+> No construtor do **controller** é passado como **inversão de depedência** a interface `IFetchUserUseCase`.
 
 ```php
 
