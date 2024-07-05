@@ -46,9 +46,32 @@ A arquitetura package-by-feature jutamente com os principais princípios SOLID, 
   - primeng: `^17.18.1`,
   - and more...
 
-#### Dev 💻
+#### Doc 📑
 
+##### Routes 
 
+>
+> [!NOTE]
+> Para adicionar uma nova rota, deve-se levar em consideração os `Use Cases`, `Controllers` e as `Factories`. 
+>
+
+```
+|-- routes
+|   |-- api.php
+|-- config
+|   |-- factories.php
+|-- UseCases
+|   |-- Intro
+|   |   |-- WelcomeMessage
+|   |   |   |-- WelcomeMessageController.php
+|   |   |   |-- WelcomeMessageFactory.php
+|   |   |   |-- IWelcomeMessageUseCase.php
+|   |   |   |-- WelcomeMessageUseCase.php
+```
+
+Em `api.php` referencie o `controller` através do `namespace`, pórem, deve-se remover o `App\UseCases\` matendo apenas o restante, nesse caso, `Intro\WelcomeMessage\WelcomeMessageController`
+
+#### Middlewares
 
 #### Execution ⚙️
 
