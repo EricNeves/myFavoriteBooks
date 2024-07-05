@@ -40,6 +40,8 @@ A aplicação com **PHP** adota princípios de design de software, como os **pri
     - Informações de um livro
     - Todos os livros
     - Remover um livro
+- 📡 DEvOPS
+  - NGINX
 - ⚡ Dependencies:
   - phpunit/phpunit: `^10.5`
   - vlucas/phpdotenv: `^5.6`
