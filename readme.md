@@ -6,7 +6,7 @@
   <br />
 </h4>
 
-<p align="center">Aplicação desenvolvida com <strong>PHP</strong>, baseado nos princípios <strong>SOLID</strong> e na arquitetura <strong>package-by-feature</strong>, garantindo maior legibilidade e organização do código, bem como a implementação de <strong>testes automatizados</strong>.</p>
+<p align="center">Aplicação desenvolvida com <strong>PHP</strong> e Angular, porém, com o foco no app em PHP que foi criado baseado nos princípios <strong>SOLID</strong> e na arquitetura <strong>package-by-feature</strong>, garantindo maior legibilidade e organização do código, bem como a implementação de <strong>testes automatizados</strong>.</p>
 
 <p align="center">Data de criação: Jun 9, 2024</p>
 
@@ -21,7 +21,7 @@
 
 #### Intro 📜
 
-Este é um exemplo de aplicação com **PHP** que adota princípios de design de software, como os **princípios SOLID**, e uma arquitetura modular baseada em funcionalidades (**package-by-feature**). Essa abordagem garante que o código seja bem estruturado, fácil de entender e manter, além de permitir uma escalabilidade e extensibilidade mais simples.
+A aplicação com **PHP** adota princípios de design de software, como os **princípios SOLID**, e uma arquitetura modular baseada em funcionalidades (**package-by-feature**). Essa abordagem garante que o código seja bem estruturado, fácil de entender e manter, além de permitir uma escalabilidade e extensibilidade mais simples.
 
 > [!NOTE]
 > O **upload** das imagens são relativamente simples, com **validação** e salvas no formato **BLOB** (**Binary Large Object**), num **cenário real**, seriam salvas em uma **CDN** (**Content Delivery Network**).
