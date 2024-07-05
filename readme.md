@@ -94,7 +94,7 @@ Agora, em `config/factories.php`, associe o **controller** passado na rota com a
 ```php 
 
 return [
-  'Intro\WelcomeMessage\WelcomeMessageController' => App\Intro\WelcomeMessage\WelcomeMessageFactory::class
+  'Intro\WelcomeMessage\WelcomeMessageController' => App\UseCases\Intro\WelcomeMessage\WelcomeMessageFactory::class
 ];
 
 ```
