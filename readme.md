@@ -14,7 +14,7 @@
   <img src="https://img.shields.io/github/last-commit/ericneves/myFavoriteBooks?display_timestamp=author&style=for-the-badge&logo=github" alt="Github">
   <img src="https://img.shields.io/github/languages/count/ericneves/myFavoriteBooks?style=for-the-badge&logo=rocket&color=%23F5455C">
   <img src="https://img.shields.io/github/languages/top/ericneves/myFavoriteBooks?style=for-the-badge&logo=PHP&logoColor=%23fff&labelColor=%23777BB4&color=%23333">
-  <img src="https://img.shields.io/github/license/ericneves/solidprinciples?style=flat-square&logo=git&color=%23F05032">
+  <img src="https://img.shields.io/github/license/ericneves/myFavoriteBooks?style=for-the-badge&logo=git&logoColor=%23C71D23&color=%23C71D23">
 </p>
 
 <img src="resources/screenshots/screenshot.png">
@@ -432,4 +432,4 @@ $ cd www && composer test
 
 #### License 📋
 
-<img src="https://img.shields.io/github/license/ericneves/solidprinciples?style=flat-square&logo=git&color=%23F05032">
+<img src="https://img.shields.io/github/license/ericneves/myFavoriteBooks?style=for-the-badge&logo=git&logoColor=%23C71D23&color=%23C71D23">
