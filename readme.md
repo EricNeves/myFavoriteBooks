@@ -52,7 +52,7 @@ A arquitetura package-by-feature jutamente com os principais princípios SOLID, 
 
 >
 > [!NOTE]
-> Para adicionar uma nova rota, deve-se levar em consideração os `Use Cases`, `Controllers` e as `Factories`. 
+> Para adicionar uma nova **rota**, deve-se levar em consideração os `Use Cases`, `Controllers` e as `Factories`. 
 >
 
 ```
@@ -69,9 +69,140 @@ A arquitetura package-by-feature jutamente com os principais princípios SOLID, 
 |   |   |   |-- WelcomeMessageUseCase.php
 ```
 
-Em `api.php` referencie o `controller` através do `namespace`, pórem, deve-se remover o `App\UseCases\` matendo apenas o restante, nesse caso, `Intro\WelcomeMessage\WelcomeMessageController`
+Em `routes/api.php` referencie o `controller` através do `namespace`, pórem, deve-se remover o `App\UseCases\` matendo apenas o restante, nesse caso, `Intro\WelcomeMessage\WelcomeMessageController`.
 
-#### Middlewares
+```php 
+
+<?php 
+
+use App\Http\Router;
+
+Route::get('/', 'Intro\WelcomeMessage\WelcomeMessageController');
+
+```
+
+Agora, em `config/factories.php`, associe o **controller** passado na **rota** com a `Factory` do `Use Case`.
+
+>
+> [!NOTE]
+> A `factory` é responsável por criar as **instâncias** e injetar as **depedências**.
+>
+
+```php 
+
+return [
+  'Intro\WelcomeMessage\WelcomeMessageController' => App\Intro\WelcomeMessage\WelcomeMessageFactory.php
+];
+
+```
+
+##### Use Cases
+
+De modo geral, será exemplificado a criação de um Use Case incluindo recursos como Banco de Dados.
+
+```
+|-- Providers
+|   |-- IUserPostgresProvider.php
+|   |-- Implementation
+|   |   |-- UserPostgresProvider.php
+|-- Repositories
+|   |-- UserRepository.php
+|-- UseCases
+|   |-- User
+|   |   |-- FetchUser
+|   |   |   |-- FetchUserController.php
+|   |   |   |-- FetchUserFactory.php
+|   |   |   |-- IFetchUserUseCase.php
+|   |   |   |-- FetchUserUseCase.php
+```
+`IUserPostgresProvider`
+
+```php 
+<?php 
+
+namespace App\Providers;
+
+interface IUserPostgresProvider
+{
+  public function fetch(int $id): array;
+}
+
+```
+
+`UserPostgresProvider`
+
+```php 
+
+<?php
+
+namespace App\Providers\Implementations;
+
+use App\Providers\IUserPostgresProvider;
+use PDO;
+
+class UserPostgresProvider implements IUserPostgresProvider
+{
+    public function __construct(private PDO $pdo)
+    {
+    }
+
+    public function fetch(int $id): array 
+    {
+      return $this->pdo->query("...");
+    }
+}
+
+```
+
+`IFetchUserUseCase`
+
+```php 
+
+<?php
+
+namespace App\UseCases\User\FetchUser;
+
+interface IFetchUserUseCase
+{
+    public function execute(int | string $userId): array;
+}
+
+
+```
+
+`Controller`
+
+> [!NOTE]
+> No **construtor** do `controller` é passado como **Inversão de Depedência** a **interface** `IFetchUserUseCase`.
+
+```php
+
+<?php
+
+namespace App\UseCases\User\FetchUser;
+
+use App\Http\Request;
+use App\Http\Response;
+use App\UseCases\User\FetchUser\IFetchUserUseCase;
+
+class FetchUserController
+{
+    public function __construct(private IFetchUserUseCase $fetchUserUseCase)
+    {
+    }
+
+    public function handle(Request $request, Response $response): Response
+    {
+        return $response->json([
+            "data" => $this->fetchUserUseCase->execute($request->user()->id),
+        ]);
+    }
+}
+
+
+```
+
+##### Middlewares
 
 #### Execution ⚙️
 
