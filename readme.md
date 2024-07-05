@@ -21,9 +21,10 @@
 
 #### Intro 📜
 
-É sempre um desafio desenvolver um app com funcionalidades de um determinado framework, seja a utilização de rotas, middlewares dinâmicos, banco de dados e etc. Partindo desse principio, este projeto tem como foco o desenvolvido de um app baseado na arquitetura package-by-feature e princípios SOLID com PHP puro.
+Este é um exemplo de aplicação com **PHP** que adota princípios de design de software, como os **princípios SOLID**, e uma arquitetura modular baseada em funcionalidades (**package-by-feature**). Essa abordagem garante que o código seja bem estruturado, fácil de entender e manter, além de permitir uma escalabilidade e extensibilidade mais simples.
 
-A arquitetura package-by-feature jutamente com os principais princípios SOLID, facilitam o desenvolvimento, manutenção e escalabiliade de um app, uma vez que o sistema é separado por funcionalidades e casos de uso.
+> [!NOTE]
+> O **upload** das imagens são relativamente simples, com **validação** e salvas no formato **BLOB** (**Binary Large Object**), num **cenário real**, seriam salvas em uma **CDN** (**Content Delivery Network**).
 
 #### Features 💡
 
@@ -48,11 +49,11 @@ A arquitetura package-by-feature jutamente com os principais princípios SOLID, 
 
 #### Doc 📑
 
-##### Routes 
+### Routes 
 
 >
 > [!NOTE]
-> Para adicionar uma nova **rota**, deve-se levar em consideração os `Use Cases`, `Controllers` e as `Factories`. 
+> Para adicionar uma nova **rota**, deve-se levar em consideração os **use cases**, **controllers** e as **factories**. 
 >
 
 ```
@@ -69,7 +70,9 @@ A arquitetura package-by-feature jutamente com os principais princípios SOLID, 
 |   |   |   |-- WelcomeMessageUseCase.php
 ```
 
-Em `routes/api.php` referencie o `controller` através do `namespace`, pórem, deve-se remover o `App\UseCases\` matendo apenas o restante, nesse caso, `Intro\WelcomeMessage\WelcomeMessageController`.
+Em `routes/api.php`, referencie o **controller** através do **namespace**. Porém, deve-se remover o `App\UseCases\`, mantendo apenas o restante, nesse caso, `Intro\WelcomeMessage\WelcomeMessageController`.
+
+Exemplo:
 
 ```php 
 
@@ -81,7 +84,7 @@ Route::get('/', 'Intro\WelcomeMessage\WelcomeMessageController');
 
 ```
 
-Agora, em `config/factories.php`, associe o **controller** passado na **rota** com a `Factory` do `Use Case`.
+Agora, em `config/factories.php`, associe o **controller** passado na rota com a **factory** do **use case**.
 
 >
 > [!NOTE]
@@ -91,14 +94,14 @@ Agora, em `config/factories.php`, associe o **controller** passado na **rota** c
 ```php 
 
 return [
-  'Intro\WelcomeMessage\WelcomeMessageController' => App\Intro\WelcomeMessage\WelcomeMessageFactory.php
+  'Intro\WelcomeMessage\WelcomeMessageController' => App\Intro\WelcomeMessage\WelcomeMessageFactory::class
 ];
 
 ```
 
-##### Use Cases
+### Use Cases
 
-De modo geral, será exemplificado a criação de um Use Case incluindo recursos como Banco de Dados.
+De modo geral, será exemplificado a criação de um **use case** incluindo recursos como **banco de dados**.
 
 ```
 |-- Providers
@@ -133,7 +136,8 @@ interface IUserPostgresProvider
 ```
 
 > [!NOTE]
-> `UserPostgresProvider` será responsável pela implementação das consultas SQL.
+> `UserPostgresProvider` será responsável pela implementação das consultas SQL (`IUserPostgresProvider`).
+> No **construtor** de `UserPostgresProvider` é passado como **injeção de depedência** a classe `PDO`.
 > 
 
 ```php 
@@ -177,8 +181,8 @@ interface IUserRepository
 ```
 
 > [!NOTE]
-> `UserRepository` será responsável por implementar os contratos de `IUserRepository`.
-> No `construtor` de `UserRepository` é passado como inversão de depedência a interface `IUserPostgresProvider`.
+> `UserRepository` será responsável por implementar os contratos definidos por `IUserRepository`.
+> No **construtor** de `UserRepository` é passado como **inversão de depedência** a interface `IUserPostgresProvider`.
 > 
 
 ```php 
@@ -205,7 +209,7 @@ class UserRepository implements IUserRepository
 ```
 
 > [!NOTE]
-> `IFetchUserUseCase` será responsável por definir o contrato do Use Case.
+> `IFetchUserUseCase` será responsável por definir o contrato do **use case**.
 > 
 
 ```php 
@@ -216,14 +220,14 @@ namespace App\UseCases\User\FetchUser;
 
 interface IFetchUserUseCase
 {
-  public function execute(int | string $userId): array;
+  public function execute(int $userId): array;
 }
 
 ```
 
 > [!NOTE]
-> `FetchUserUseCase` será responsável pelas regras de negócio, realizando operações através do repository.
-> No `construtor` de `FetchUserUseCase` é passado como inversão de depedência o `IUserRepository`.
+> `FetchUserUseCase` será responsável por implementar `IFetchUserUseCase`, bem como as regras de negócio e nesse caso realizar operações através do **repository**.
+> No **construtor** de `FetchUserUseCase` é passado como **inversão de depedência** o `IUserRepository`.
 > 
 
 ```php 
@@ -242,9 +246,9 @@ class FetchUserUseCase implements IFetchUserUseCase
   {
   }
 
-  public function execute(int | string $userId): array
+  public function execute(int $userId): array
   {
-    $user = $this->userRepository->findById($userId);
+    $user = $this->userRepository->fetchUser($userId);
 
     if (!$user) {
       throw new Exception('Sorry, user not found.');
@@ -258,7 +262,7 @@ class FetchUserUseCase implements IFetchUserUseCase
 ```
 
 > [!NOTE]
-> No **construtor** do `controller` é passado como **Inversão de Depedência** a **interface** `IFetchUserUseCase`.
+> No construtor do **controller** é passado como **Inversão de Depedência** a interface `IFetchUserUseCase`.
 
 ```php
 
@@ -288,7 +292,7 @@ class FetchUserController
 ```
 
 > [!NOTE]
-> Por último deve-se passar as implementações dos contratos na Factory do Use Case.
+> Por último deve-se passar as implementações dos contratos na **factory** do **use case**.
 > 
 
 ```php 
@@ -320,43 +324,84 @@ class FetchUserFactory
 
 ```
 
-##### Middlewares
+### Middlewares
+
+Para adicionar um novo **middleware** segue-se o exemplo abaixo:
+
+```
+|-- middlewares
+|   |-- NewMiddleware.php
+```
+
+```php 
+
+<?php
+
+namespace App\Middlewares;
+
+use App\Http\JWT;
+use App\Http\Request;
+use App\Http\Response;
+
+class NewMiddleware
+{
+    public function handle(Request $request, Response $respose)
+    {
+        $a = 1;
+        $b = 2;
+
+        if ($a !== $b) {
+          return $respose->json(['message' => 'Unauthorized'], 401);
+        }
+    }
+}
+
+```
+
+O próximo passado será associar o **middleware** com uma **chave única** em `config/middlewares.php`.
+
+```php 
+
+<?php 
+
+return [
+  'auth'  => App\Middlewares\EnsureAuthenticatedMiddleware::class,
+  'equal' => App\Middlewares\NewMiddleware::class,
+]
+
+```
+
+Por último é só usar o **middleware** na **rota**.
+
+```php 
+
+Router::get('/users/fetch', 'User\FetchUser\FetchUserController')->middlewares('auth', 'equal');
+
+```
 
 #### Execution ⚙️
 
 >
 > [!NOTE]
-> Siga os passos abaixo para a execução do projeto.
+> Siga os passos abaixo para a execução do projeto em **ambiente de desenvolvimento**.
 
-O primeiro passo, é nomear o arquivo `.env.example` para `.env`.
+O primeiro passo, é renomear o arquivo `.env.example` para `.env`, o mesmo se encontra em `/www`.
 
 ```sh 
 
-# Install Deps
-$ cd app && pnpm install
+# Install deps www/
+$ cd www && composer install
+
+# Install deps web/
+$ cd web && pnpm install
 
 # Docker
-$ docker-compose -f "docker-compose-dev.yml" up -d --build
+$ docker compose -f "docker-compose-dev.yml" up -d --build
 
 # Tests
-$ pnpm test
-$ pnpm test:coverage
+$ cd www && composer test
 
 ```
-
-#### Alive 🔋
-
-Após o processo de instalação o serviço estará disponível na porta `3030`. 
-Acessando o endpoint `127.0.0.1:3030/doc`, terá a documentação para o uso da `api`.
-
-Em produção, o projeto está hospedado no serviço gratuito da empresa [Render](https://render.com/), rodando todo o app em `docker`.
-
->
-> [!NOTE]
-> Por ser um serviço gratuito, leva alguns segundos ou minutos para abrir a conexão, após isso, poderá usar o serviço normalmente.
-> 
-
-Link: ([SOLID Principles API](https://solidprinciples-api.onrender.com))
 
 #### Author 🦆
 
