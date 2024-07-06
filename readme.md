@@ -40,7 +40,7 @@ A aplicação com **PHP** adota princípios de design de software, como os **pri
     - Informações de um livro
     - Todos os livros
     - Remover um livro
-- 📡 DEvOPS
+- 📡 DevOps
   - NGINX
 - ⚡ Dependencies:
   - phpunit/phpunit: `^10.5`
