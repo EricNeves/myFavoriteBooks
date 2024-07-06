@@ -40,15 +40,15 @@ A aplicação com **PHP** adota princípios de design de software, como os **pri
     - Informações de um livro
     - Todos os livros
     - Remover um livro
-- 📡 DevOps
-  - NGINX
-  - Docker
 - ⚡ Dependencies:
   - phpunit/phpunit: `^10.5`
   - vlucas/phpdotenv: `^5.6`
   - @angular/cli: `^17.3.8`
   - primeng: `^17.18.1`,
   - and more...
+- 📡 DevOps
+  - NGINX
+  - Docker
 
 #### Doc 📑
 
@@ -436,7 +436,7 @@ Pronto, após isso é só passar as depedências na **factory** do **use case** 
 Para adicionar um novo **middleware** segue-se o exemplo abaixo:
 
 ```
-|-- middlewares
+|-- Middlewares
 |   |-- NewMiddleware.php
 ```
 
