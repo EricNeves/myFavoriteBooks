@@ -429,7 +429,7 @@ class UserMysqlProvider implements IUserMysqlProvider
 
 ```
 
-Pronto, após isso é só passar as depedências na **factory** como nos exemplos já mostrados.
+Pronto, após isso é só passar as depedências na **factory** do **use case** como nos exemplos já mostrados.
 
 ### Middlewares
 
