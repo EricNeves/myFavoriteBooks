@@ -326,6 +326,110 @@ class FetchUserFactory
 
 ```
 
+> [!NOTE]
+> `$databaseConfig` que é passado como paramêtro em `generateInstance`, é o array definido em `config/database.php`. 
+> Se quiser mudar o provider de **postgresql** para **mysql** por exemplo, será necessário definir as configurações do **novo banco**.
+> 
+
+No exemplo será mostrado a configuração do **mysql** com **PDO**, mas, caso deseje usar **mysqlli** ou algum **ORM**, basta criar a conexão como no exemplo abaixo e implementar o **provider**.
+
+`config/database.php`
+
+```php
+
+<?php
+
+return [
+  'pgsql' => [
+    'host'     => $_ENV['PG_HOST'],
+    'port'     => $_ENV['PG_PORT'],
+    'database' => $_ENV['PG_DATABASE'],
+    'username' => $_ENV['PG_USERNAME'],
+    'password' => $_ENV['PG_PASSWORD'],
+  ],
+  'mysql' => [
+    'host'     => '...',
+    'database' => '...',
+    'username' => '...',
+    'password' => '...'   
+  ]
+];
+
+
+```
+
+`Infrastructure/Mysql.php`
+
+```php
+
+<?php
+
+namespace App\Infrastructure;
+
+use PDO;
+
+class Mysql
+{
+    public static function connect(array $config): PDO
+    {
+        $host     = $config['mysql']['host'];
+        $dbname   = $config['mysql']['database'];
+        $username = $config['mysql']['username'];
+        $password = $config['mysql']['password'];
+
+        $dns = "mysql:host=$host;dbname=$dbname;";
+
+        $pdo = new PDO($dns, $username, $password);
+
+        return $pdo;
+    }
+}
+
+
+```
+
+`Providers/IUserMysqlProvider.php`
+
+```php
+
+<?php
+
+namespace App\Providers;
+
+interface IUserMysqlProvider
+{
+  public function save(array $fields): bool;
+}
+
+```
+
+`Providers/Implementations/UserMysqlProvider.php`
+
+```php
+
+<?php
+
+namespace App\Providers\Implementations;
+
+use App\Providers\IUserMysqlProvider;
+use PDO;
+
+class UserMysqlProvider implements IUserMysqlProvider
+{
+    public function __construct(private PDO $pdo)
+    {
+    }
+
+    public function save(array $fields): bool
+    {
+      // ...
+    }
+}
+
+```
+
+Pronto, após isso é só passar as depedências na **factory** como nos exemplos já mostrados.
+
 ### Middlewares
 
 Para adicionar um novo **middleware** segue-se o exemplo abaixo:
