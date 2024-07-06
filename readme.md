@@ -42,6 +42,7 @@ A aplicação com **PHP** adota princípios de design de software, como os **pri
     - Remover um livro
 - 📡 DevOps
   - NGINX
+  - Docker
 - ⚡ Dependencies:
   - phpunit/phpunit: `^10.5`
   - vlucas/phpdotenv: `^5.6`
